@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*,
+*:not(dialog),
 ::before,
 ::after {
   padding: 0;

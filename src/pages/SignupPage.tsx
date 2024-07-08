@@ -1,15 +1,13 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
 import service from "./../service/api"
 
-const SignupPage = () => {
+const SignupPage = ({ modal, showPage, setShowPage }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     email: "",
   })
   const [errorMessage, setErrorMessage] = useState("")
-  const navigate = useNavigate()
 
   function handleChange(event) {
     const value = event.currentTarget.value
@@ -21,53 +19,55 @@ const SignupPage = () => {
     event.preventDefault()
     try {
       const response = await service.post("/auth/signup", formData)
-      console.log(response)
       if (response.status === 201) {
         setTimeout(() => {
-          navigate("/login")
+          modal.current.close()
+          setShowPage(!showPage)
+          modal.current.showModal()
         }, 200)
       }
     } catch (error) {
       console.log(error)
-      setErrorMessage(error.response.data.message)
+      setErrorMessage(error.message)
       setTimeout(() => {
         setErrorMessage("")
-      }, 3000)
+      }, 4000)
     }
   }
 
   const { username, password, email } = formData
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email: </label>
-        <input type="email" id="email" value={email} onChange={handleChange} />
-      </div>
-      <div>
-        <label htmlFor="username">Password: </label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={handleChange}
-        />
-      </div>
+      <fieldset>
+        <legend>SIGN UP</legend>
+        <div>
+          <label htmlFor="username">Username: </label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email: </label>
+          <input type="email" id="email" value={email} onChange={handleChange} />
+        </div>
+        <div>
+          <label htmlFor="username">Password: </label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={handleChange}
+          />
+        </div>
 
-      <p className="error">{errorMessage}</p>
+        <p className="error">{errorMessage}</p>
 
-      <p>
-        Already have an account? <Link to={"/login"}>Login.</Link>
-      </p>
-      <button>Sign Up</button>
+
+        <button>Sign up</button>
+      </fieldset>
     </form>
   )
 }

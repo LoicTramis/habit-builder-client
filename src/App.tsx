@@ -6,8 +6,9 @@ import HabitsPage from './pages/HabitsPage'
 import HabitPage from './pages/HabitPage'
 import GroupsPage from './pages/GroupsPage'
 import GroupPage from './pages/GroupPage'
-import SignupPage from './pages/SignupPage'
-import LoginPage from './pages/LoginPage'
+
+// ? For improvement
+// https://blog.logrocket.com/building-react-modal-module-with-react-router/
 
 function App() {
 
@@ -17,8 +18,6 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
         <Route path="/habits" element={<HabitsPage />}>
           <Route path=":habitId" element={<HabitPage />} />
         </Route>

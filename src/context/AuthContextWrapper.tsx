@@ -31,7 +31,6 @@ function AuthContextWrapper({ children }) {
       setIsLoading(false)
       setIsLoggedIn(true)
 
-      console.log(response)
     } catch (error) {
       setUser(null)
       setIsLoading(false)
