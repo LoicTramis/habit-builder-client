@@ -4,8 +4,10 @@ import Aside from './components/Aside'
 import HomePage from './pages/HomePage'
 import HabitsPage from './pages/HabitsPage'
 import HabitPage from './pages/HabitPage'
+import HabitCreatePage from './pages/HabitCreatePage'
 import GroupsPage from './pages/GroupsPage'
 import GroupPage from './pages/GroupPage'
+import GroupCreatePage from './pages/GroupCreatePage'
 
 // ? For improvement
 // https://blog.logrocket.com/building-react-modal-module-with-react-router/
@@ -17,13 +19,20 @@ function App() {
       <Aside />
 
       <Routes>
+        {/* HOME ROUTE */}
         <Route path="/" element={<HomePage />} />
+
+        {/* HABITS ROUTE */}
         <Route path="/habits" element={<HabitsPage />}>
           <Route path=":habitId" element={<HabitPage />} />
         </Route>
+        <Route path='/createHabit' element={<HabitCreatePage />} />
+
+        {/* GROUPS ROUTE */}
         <Route path="/groups" element={<GroupsPage />}>
           <Route path=":groupId" element={<GroupPage />} />
         </Route>
+        <Route path='/createGroup' element={<GroupCreatePage />} />
       </Routes>
     </>
   )

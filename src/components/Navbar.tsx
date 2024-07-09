@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import LoginPage from '../pages/LoginPage'
 import SignupPage from '../pages/SignupPage'
 import { AuthContext } from '../context/AuthContextWrapper'
@@ -8,6 +8,7 @@ const Navbar = () => {
   const modal = useRef(null)
   const [showPage, setShowPage] = useState(false)
   const authenticateUser = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const handleShowModal = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -32,6 +33,21 @@ const Navbar = () => {
       : <button onClick={handleShowModal}>Log in / Sign up</button>
   }
 
+  const handleCreateHabit = () => {
+    if (!authenticateUser.isLoggedIn) {
+      // display message for log in
+      return
+    }
+    navigate('/createHabit')
+  }
+
+  const handleCreateGroup = () => {
+    if (!authenticateUser.isLoggedIn) {
+      // display message for log in
+      return
+    }
+    navigate('/createGroup')
+  }
   return (
     <nav>
       <dialog ref={modal}>
@@ -55,7 +71,9 @@ const Navbar = () => {
         <li><NavLink to="/">Home</NavLink></li>
         <li>{authUserJSX()}</li>
         <li><NavLink to="/habits">Habits</NavLink></li>
+        <li><button onClick={handleCreateHabit}>Create habit</button></li>
         <li><NavLink to="/groups">Group</NavLink></li>
+        <li><button onClick={handleCreateGroup}>Create group</button></li>
       </ul>
     </nav>
   )
