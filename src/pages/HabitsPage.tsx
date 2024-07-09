@@ -1,26 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
-import HabitList from '../components/HabitList'
-import service from '../service/api';
-import { AuthContext } from '../context/AuthContextWrapper';
+import { useContext, useEffect, useState } from "react";
+import HabitList from "../components/HabitList";
+import service from "../service/api";
+import { AuthContext } from "../context/AuthContextWrapper";
+import { Habit } from "../types/Habit";
 
-type Habit = {
-  _id: string;
-  title: string;
-  description: string;
-  startDate: Date;
-  endDate: Date;
-  frequency: string;
-  creator: {
-    username: string;
-    email: string;
-  };
-  difficulty: string;
-  groups: string[];
-};
 
 const HabitsPage = () => {
   const [habits, setHabits] = useState<Habit[] | null>(null);
-  const authenticateUser = useContext(AuthContext)
+  const authenticateUser = useContext(AuthContext);
 
   const fetchHabits = async () => {
     try {
@@ -31,24 +18,23 @@ const HabitsPage = () => {
       console.log(error);
     }
   };
-  const today = new Date()
-
+  const today = new Date();
 
   useEffect(() => {
     fetchHabits();
   }, []);
 
   if (!habits) {
-    return <p>Loading</p>
+    return <p>Loading</p>;
   }
 
   if (!authenticateUser.isLoggedIn) {
-    return <p>Log in to see habits</p>
+    return <p>Log in to see habits</p>;
   }
 
-  const upcomingHabits = habits.filter((habit: Habit) => habit.startDate > today)
-  const ongoingHabits = habits.filter((habit: Habit) => habit.startDate < today && habit.endDate < today)
-  const doneHabits = habits.filter((habit: Habit) => habit.endDate > today)
+  const upcomingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) < today);
+  const ongoingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) > today && new Date(habit.endDate) < today);
+  const doneHabits = habits.filter((habit: Habit) => new Date(habit.endDate) > today);
 
   return (
     <main>
@@ -59,7 +45,7 @@ const HabitsPage = () => {
         <HabitList habits={doneHabits} status="Done" />
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default HabitsPage
+export default HabitsPage;

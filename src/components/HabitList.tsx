@@ -1,29 +1,15 @@
-import React from 'react'
 import HabitCard from './HabitCard'
-
-type Habit = {
-  _id: string;
-  title: string;
-  description: string;
-  startGoal: Date;
-  endGoal: Date;
-  frequency: string;
-  creator: {
-    username: string;
-    email: string;
-  };
-  difficulty: string;
-  groups: string[];
-};
+import { Habit } from '../types/Habit'
 
 const HabitList = ({ habits, status }) => {
-
-  const habitsJSX = habits.map((habit: Habit) => <HabitCard {...habit} />)
+  const habitsJSX = habits.map((habit: Habit) => <HabitCard key={habit._id} {...habit} />)
 
   return (
     <article>
       <h3>{status}</h3>
-      {habitsJSX}
+      <ul>
+        {habitsJSX}
+      </ul>
     </article>
   )
 }

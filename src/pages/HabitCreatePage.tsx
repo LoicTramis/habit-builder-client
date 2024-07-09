@@ -2,18 +2,10 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContextWrapper'
 import service from '../service/api'
-
-type Habit = {
-  title: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-  frequency: string;
-  difficulty: string;
-};
+import { Habit } from '../types/Habit'
 
 const HabitCreatePage = () => {
-  const [habitForm, setHabitForm] = useState<Habit>({
+  const [habitForm, setHabitForm] = useState<Habit | any>({
     title: "",
     description: "",
     startDate: "",

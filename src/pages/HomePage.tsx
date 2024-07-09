@@ -2,35 +2,8 @@ import React, { useEffect, useState } from "react";
 import service from "../service/api";
 import HabitCard from "../components/HabitCard";
 import GroupCard from "../components/GroupCard";
-
-// Display habits and groups
-// Display nothing if no habits and no groups
-type Habit = {
-  _id: string;
-  title: string;
-  description: string;
-  startGoal: Date;
-  endGoal: Date;
-  frequency: string;
-  creator: {
-    username: string;
-    email: string;
-  };
-  difficulty: string;
-  groups: string[];
-};
-
-type Group = {
-  _id: string,
-  name: string,
-  description: string,
-  admin: {
-    username: string,
-    email: string
-  },
-  habits: string[],
-  members: string[]
-}
+import { Habit } from "../types/Habit";
+import { Group } from "../types/Group";
 
 const HomePage = () => {
   const [habits, setHabits] = useState<Habit[] | null>(null);
