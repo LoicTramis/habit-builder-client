@@ -6,8 +6,8 @@ const GroupCard = ({ name, description, admin, habits, members }) => {
       <h3>{name}</h3>
       <p>Made by {admin.username}</p>
       <p>{description}</p>
-      <p>Habits: {habits.length}</p>
-      <p>Members: {members.length}</p>
+      <p>Habits: {JSON.stringify(habits)}</p>
+      <p>Members: {JSON.stringify(members)}</p>
       <hr />
     </li>
   )
