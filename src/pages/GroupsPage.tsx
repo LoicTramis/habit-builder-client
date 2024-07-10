@@ -22,14 +22,12 @@ const GroupsPage = () => {
   }, [])
 
   if (!groups) {
-    return <p>Loading...</p>
+    return <Main title=""><p>Loading</p></Main>
   }
 
   return (
     <Main title="Explore groups">
-      <section>
-        <GroupList groups={groups} />
-      </section>
+      <GroupList groups={groups} title="All groups" />
     </Main>
   )
 }

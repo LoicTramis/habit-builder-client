@@ -1,0 +1,69 @@
+*:not(dialog),
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  background-color: #f6f6f6;
+  color: #d9d9d9;
+  font-family: "Nunito", sans-serif;
+
+  /* CSS COLOR VARIABLES */
+  /* --- White mode --- */
+  --bg-color-primary-white: #fefefe; /* Neutral-50 */
+  --bg-color-secondary-white: #f6f6f6; /* Neutral-100 */
+
+  --text-color-primary-white: #060606; /* Neutral-950 */
+  --text-color-secondary-white: #707070; /* Neutral-900 */
+
+  --border-color-white: #c7c7c7; /* Neutral-500 */
+
+  /* --- Dark mode --- */
+  --bg-color-primary-dark: #fefefe;
+  --bg-color-secondary-dark: #f6f6f6;
+
+  --text-color-primary-dark: #060606;
+  --text-color-secondary-dark: #707070;
+
+  --border-color-dark: #c7c7c7;
+}
+
+#root {
+  display: flex;
+  height: 100vh;
+}
+
+#login:hover > svg,
+#profile:hover > svg {
+  animation: 0.2s ease-in-out 0s 2 alternate slide;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-10px);
+  }
+}
+
+.shadow-center-sm {
+  box-shadow: 0 0 4px #c7c7c7;
+}
+.shadow-center-md {
+  box-shadow: 0 0 6px #c7c7c7;
+}
+.shadow-center-lg {
+  box-shadow: 0 0 8px #c7c7c7;
+}
+.shadow-center-xl {
+  box-shadow: 0 0 8px #c7c7c7;
+}
+.shadow-center-2xl {
+  box-shadow: 0 0 10px #c7c7c7;
+}
+.shadow-center-3xl {
+  box-shadow: 0 0 12px #c7c7c7;
+}

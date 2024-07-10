@@ -26,7 +26,7 @@ const HabitsPage = () => {
   }, []);
 
   if (!habits) {
-    return <p>Loading</p>;
+    return <Main title=""><p>Loading</p></Main>;
   }
 
   const upcomingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) < today);
@@ -35,11 +35,9 @@ const HabitsPage = () => {
 
   return (
     <Main title="Explore habits">
-      <section>
-        <HabitList habits={upcomingHabits} status="Upcoming" />
-        <HabitList habits={ongoingHabits} status="Ongoing" />
-        <HabitList habits={doneHabits} status="Done" />
-      </section>
+      <HabitList habits={upcomingHabits} title="Upcoming" />
+      <HabitList habits={ongoingHabits} title="Ongoing" />
+      <HabitList habits={doneHabits} title="Done" />
     </Main>
   );
 };

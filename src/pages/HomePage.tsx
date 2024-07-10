@@ -5,6 +5,8 @@ import GroupCard from "../components/GroupCard";
 import { Habit } from "../types/Habit";
 import { Group } from "../types/Group";
 import Main from "../components/Main";
+import HabitList from "../components/HabitList";
+import GroupList from "../components/GroupList";
 
 const HomePage = () => {
   const [habits, setHabits] = useState<Habit[] | null>(null);
@@ -36,7 +38,7 @@ const HomePage = () => {
   }, []);
 
   if (!habits || !groups) {
-    return <p>Loading...</p>;
+    return <Main title=""><p>Loading</p></Main>
   }
 
   const filteredHabits = habits
@@ -47,29 +49,10 @@ const HomePage = () => {
     .toSorted((group1: Group, group2: Group) => group2.members.length - group1.members.length)
     .slice(0, 3);
 
-  const habitsJSX = filteredHabits.map((habit: Habit) => {
-    return (
-      <HabitCard key={habit._id} {...habit} />
-    );
-  });
-
-  const groupsJSX = filteredGroups.map((group: Group) => {
-    return (
-      <GroupCard key={group._id} {...group} />
-    )
-  })
-
   return (
     <Main title="Welcome to habit builder">
-      <article>
-        <h2>Top Habits</h2>
-        <ul>{habitsJSX}</ul>
-      </article>
-
-      <article>
-        <h2>Top Groups</h2>
-        <ul>{groupsJSX}</ul>
-      </article>
+      <HabitList habits={filteredHabits} title="Top Habits" />
+      <GroupList groups={filteredGroups} title="Top Groups" />
     </Main>
   );
 };

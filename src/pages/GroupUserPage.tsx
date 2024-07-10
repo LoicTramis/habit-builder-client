@@ -21,13 +21,13 @@ const GroupUserPage = () => {
   }, [])
 
   if (!groups) {
-    return <p>Loading...</p>
+    return <Main title=""><p>Loading</p></Main>
   }
 
   return (
     <Main title="My groups">
       <section>
-        <GroupList groups={groups} />
+        <GroupList groups={groups} title="" />
       </section>
     </Main>
   )

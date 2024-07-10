@@ -5,7 +5,7 @@ import Footer from './Footer'
 
 const Aside = () => {
   return (
-    <aside className='w-1/6 bg-cyan-500'>
+    <aside className='w-1/6 h-full bg-[#f4f4f4]'>
       <Header />
       <Navbar />
       <Footer />

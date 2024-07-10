@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Nunito";
+  src: url("../assets/fonts/NunitoSans.ttf");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("../assets/fonts/NunitoSansItalic.ttf");
+  font-style: italic;
+}
+@font-face {
+  font-family: "Titan One";
+  src: url("../assets/fonts/TitanOne-Regular.ttf");
+  font-style: normal;
+}

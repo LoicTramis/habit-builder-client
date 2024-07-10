@@ -20,6 +20,10 @@ You can create a group habit (you become admin of that group)
 You can join a group  
 You can participate  in a habit  
 
+## Style
+- CSS: TailwindCSS
+- Fonts: Nunito sans
+
 ## Deployment
 - Front-end hosted with [Netlify](https://habit-builder.netlify.app)
 - Back-end hosted with [Render](https://habit-builder-server.onrender.com)

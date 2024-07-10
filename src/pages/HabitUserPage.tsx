@@ -21,7 +21,7 @@ const HabitUserPage = () => {
   }, [])
 
   if (!habits) {
-    return <p>Loading...</p>
+    return <Main title=""><p>Loading</p></Main>
   }
 
   const today = new Date();
@@ -33,9 +33,9 @@ const HabitUserPage = () => {
   return (
     <Main title="My Habits">
       <section>
-        <HabitList habits={upcomingHabits} status="Upcoming" />
-        <HabitList habits={ongoingHabits} status="Ongoing" />
-        <HabitList habits={doneHabits} status="Done" />
+        <HabitList habits={upcomingHabits} title="Upcoming" />
+        <HabitList habits={ongoingHabits} title="Ongoing" />
+        <HabitList habits={doneHabits} title="Done" />
       </section>
     </Main>
   )

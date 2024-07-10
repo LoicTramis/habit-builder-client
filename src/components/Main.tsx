@@ -1,6 +1,6 @@
 const Main = ({ title, children }) => {
   return (
-    <main className='w-5/6'>
+    <main className='w-5/6 h-full overflow-y-scroll overflow-x-hidden shadow-2xl rounded-3xl border-l border-[#c7c7c7] bg-[#fefefe] text-neutral-950 p-14'>
       <h1>{title}</h1>
       {children}
     </main>

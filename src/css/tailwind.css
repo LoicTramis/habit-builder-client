@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-lg;
+  }
+}
+
+@layer components {
+  .element {
+    padding: theme(spacing[3]);
+    padding-bottom: theme(spacing[5]);
+  }
+  .sub-title {
+    font-weight: theme(fontWeight.bold);
+    color: theme(colors.neutral.950);
+    padding: theme(spacing.1) theme(spacing.1);
+  }
+  .sub-element {
+    padding: theme(spacing[1]) 0;
+    font-weight: theme(fontWeight.bold);
+    color: theme(colors.neutral.500);
+    width: theme(width.full);
+  }
+  .gradient {
+    background: linear-gradient(to right, #fff200, #ef2576);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
