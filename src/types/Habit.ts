@@ -10,5 +10,5 @@ export type Habit = {
     email: string;
   };
   difficulty: string;
-  groups: string[];
+  members: string[];
 };

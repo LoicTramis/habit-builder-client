@@ -1,7 +1,6 @@
-import React from 'react'
 import { formatDate } from '../utils/date'
 
-const HabitCard = ({ title, creator, difficulty, description, startDate, endDate, frequency, groups }) => {
+const HabitCard = ({ title, creator, difficulty, description, startDate, endDate, frequency, members }) => {
   return (
     <li>
       <h3>{title}</h3>
@@ -11,7 +10,7 @@ const HabitCard = ({ title, creator, difficulty, description, startDate, endDate
       <p>Start: {formatDate(startDate)}</p>
       <p>End: {formatDate(endDate)}</p>
       <p>Frequency: {frequency}</p>
-      <p>Groups: {groups.length}</p>
+      <p>Members: {members.length}</p>
       <hr />
     </li>
   )

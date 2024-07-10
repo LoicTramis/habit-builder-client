@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import service from "../service/api";
 import HabitCard from "../components/HabitCard";
 import GroupCard from "../components/GroupCard";
@@ -34,12 +34,12 @@ const HomePage = () => {
     fetchGroups();
   }, []);
 
-  if (!habits) {
+  if (!habits || !groups) {
     return <p>Loading...</p>;
   }
 
   const filteredHabits = habits
-    .toSorted((habit1: Habit, habit2: Habit) => habit2.groups.length - habit1.groups.length)
+    .toSorted((habit1: Habit, habit2: Habit) => habit2.members.length - habit1.members.length)
     .slice(0, 3);
 
   const filteredGroups = groups
