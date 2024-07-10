@@ -23,9 +23,7 @@ const GroupsPage = () => {
   if (!groups) {
     return <p>Loading...</p>
   }
-  if (!authenticateUser.isLoggedIn) {
-    return <p>Log in to see groups</p>;
-  }
+
   return (
     <main>
       <h2>Groups</h2>

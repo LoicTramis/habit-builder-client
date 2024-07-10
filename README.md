@@ -1,12 +1,12 @@
 # Good habit builder
+_A progress everyday will go a very long way_
 
-#### Deployment
-- Front-end hosted with [Netlify](https://habit-builder.netlify.app)
-- Back-end hosted with [Render](https://habit-builder-server.onrender.com)
-- Database hosted with [MongoDB](https://cloud.mongodb.com/)
+<p style="font-size: 1.5rem; font-weight: bold; opacity: 0.8">
+<a href="https://habit-builder.netlify.app">🚀 LIVE VERSION 🚀</a>
+</p>
 
 Build good habit by setting up goal, forming group around that goal and putting the work to make that change
-_A progress everyday will go a very long way_
+
 
 ## Create a group habit
 - set up a goal
@@ -16,5 +16,11 @@ _A progress everyday will go a very long way_
 - change description
 
 ## Social part
-You can create a group habit (you become admin of that group)
-You can join some group habit
+You can create a group habit (you become admin of that group)  
+You can join a group  
+You can participate  in a habit  
+
+## Deployment
+- Front-end hosted with [Netlify](https://habit-builder.netlify.app)
+- Back-end hosted with [Render](https://habit-builder-server.onrender.com)
+- Database hosted with [MongoDB](https://cloud.mongodb.com/)

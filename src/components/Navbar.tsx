@@ -73,17 +73,29 @@ const Navbar = () => {
         </li>
         <li>{authUserJSX()}</li>
         <li>
-          <NavLink to="/habits">Habits</NavLink>
+          <NavLink to="/habits">Explore Habits</NavLink>
         </li>
         <li>
-          <button onClick={handleCreateHabit}>Create habit</button>
+          <NavLink to="/groups">Explore Groups</NavLink>
         </li>
-        <li>
-          <NavLink to="/groups">Group</NavLink>
-        </li>
-        <li>
-          <button onClick={handleCreateGroup}>Create group</button>
-        </li>
+        {/* Auth user only */}
+
+        {authenticateUser.isLoggedIn &&
+          <>
+            <li>
+              <NavLink to="/habits/in">My habits</NavLink>
+            </li>
+            <li>
+              <button onClick={handleCreateHabit}>Create habit</button>
+            </li>
+            <li>
+              <NavLink to="/groups/in">My groups</NavLink>
+            </li>
+            <li>
+              <button onClick={handleCreateGroup}>Create group</button>
+            </li>
+          </>
+        }
       </ul>
     </nav>
   );

@@ -28,10 +28,6 @@ const HabitsPage = () => {
     return <p>Loading</p>;
   }
 
-  if (!authenticateUser.isLoggedIn) {
-    return <p>Log in to see habits</p>;
-  }
-
   const upcomingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) < today);
   const ongoingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) > today && new Date(habit.endDate) < today);
   const doneHabits = habits.filter((habit: Habit) => new Date(habit.endDate) > today);

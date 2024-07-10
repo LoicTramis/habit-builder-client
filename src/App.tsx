@@ -4,9 +4,11 @@ import Aside from './components/Aside'
 import HomePage from './pages/HomePage'
 import HabitsPage from './pages/HabitsPage'
 import HabitPage from './pages/HabitPage'
+import HabitUserPage from './pages/HabitUserPage.tsx'
 import HabitCreatePage from './pages/HabitCreatePage'
 import GroupsPage from './pages/GroupsPage'
 import GroupPage from './pages/GroupPage'
+import GroupUserPage from './pages/GroupUserPage.tsx'
 import GroupCreatePage from './pages/GroupCreatePage'
 
 // ? For improvement
@@ -23,13 +25,17 @@ function App() {
         <Route path="/" element={<HomePage />} />
 
         {/* HABITS ROUTE */}
-        <Route path="/habits" element={<HabitsPage />}>
+        <Route path="/habits">
+          <Route index element={<HabitsPage />} />
+          <Route path="in" element={<HabitUserPage />} />
           <Route path=":habitId" element={<HabitPage />} />
         </Route>
         <Route path='/createHabit' element={<HabitCreatePage />} />
 
         {/* GROUPS ROUTE */}
-        <Route path="/groups" element={<GroupsPage />}>
+        <Route path="/groups">
+          <Route index element={<GroupsPage />} />
+          <Route path="in" element={<GroupUserPage />} />
           <Route path=":groupId" element={<GroupPage />} />
         </Route>
         <Route path='/createGroup' element={<GroupCreatePage />} />
