@@ -1,8 +1,9 @@
 import React from 'react'
+import Main from '../components/Main'
 
 const HabitPage = () => {
   return (
-    <main>HabitPage</main>
+    <Main title="Habit Detail">HabitPage</Main>
   )
 }
 

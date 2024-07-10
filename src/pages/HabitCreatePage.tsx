@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContextWrapper'
 import service from '../service/api'
 import { Habit } from '../types/Habit'
+import Main from '../components/Main'
 
 const HabitCreatePage = () => {
   const [habitForm, setHabitForm] = useState<Habit | any>({
@@ -13,7 +14,6 @@ const HabitCreatePage = () => {
     frequency: "",
     difficulty: ""
   })
-
   const authenticateUser = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -26,7 +26,7 @@ const HabitCreatePage = () => {
     const name = (event.target as HTMLInputElement).name
     const value = (event.target as HTMLInputElement).value
 
-    setHabitForm((prevHabitForm) => ({
+    setHabitForm((prevHabitForm: Habit) => ({
       ...prevHabitForm,
       [name]: value
     }))
@@ -35,15 +35,20 @@ const HabitCreatePage = () => {
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const response = await service.post('api/habits', habitForm)
-    console.log(response.data)
-    setTimeout(() => {
-      // TODO 
-      // Don't use navigate
-      // Make a pop up that show the form
-      // Then success or not show option to navigate
-      navigate('/habits')
-    }, 300)
+    try {
+
+      const response = await service.post('api/habits', habitForm)
+      console.log(response.data)
+      setTimeout(() => {
+        // TODO 
+        // Don't use navigate
+        // Make a pop up that show the form
+        // Then success or not show option to navigate
+        navigate('/habits')
+      }, 300)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   if (!authenticateUser.isLoggedIn) {
@@ -51,39 +56,40 @@ const HabitCreatePage = () => {
   }
 
   return (
-    <form onSubmit={handleSubmitForm}>
+    <Main title="Create a habit">
+      <form onSubmit={handleSubmitForm}>
+        <fieldset>
+          <legend>Create a habit</legend>
 
-      <fieldset>
-        <legend>Create a habit</legend>
+          <label htmlFor='title'>Title</label>
+          <input type="text" name="title" id="title" value={habitForm.title} onChange={handleChange} />
 
-        <label htmlFor='title'>Title</label>
-        <input type="text" name="title" id="title" value={habitForm.title} onChange={handleChange} />
+          <label htmlFor='description'>Description</label>
+          <textarea name="description" id="description" value={habitForm.description} onChange={handleChange}></textarea>
 
-        <label htmlFor='description'>Description</label>
-        <textarea name="description" id="description" value={habitForm.description} onChange={handleChange}></textarea>
+          <label htmlFor='startDate'>Start date</label>
+          <input type='date' name="startDate" id="startDate" value={habitForm.startDate} onChange={handleChange}></input>
 
-        <label htmlFor='startDate'>Start date</label>
-        <input type='date' name="startDate" id="startDate" value={habitForm.startDate} onChange={handleChange}></input>
+          <label htmlFor='endDate'>End date</label>
+          <input type='date' name="endDate" id="endDate" value={habitForm.endDate} onChange={handleChange}></input>
 
-        <label htmlFor='endDate'>End date</label>
-        <input type='date' name="endDate" id="endDate" value={habitForm.endDate} onChange={handleChange}></input>
+          <label htmlFor='frequency'>Frequency</label>
+          <input type="text" name="frequency" id="frequency" value={habitForm.frequency} onChange={handleChange} />
 
-        <label htmlFor='frequency'>Frequency</label>
-        <input type="text" name="frequency" id="frequency" value={habitForm.frequency} onChange={handleChange} />
+          <label htmlFor='difficulty'>Difficulty</label>
+          <select name="difficulty" id="difficulty" value={habitForm.difficulty} onChange={handleChange}>
+            <option value="-1">-- Select a difficulty --</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+            <option value="Challenger">Challenger</option>
+            <option value="Goggins">Goggins</option>
+          </select>
 
-        <label htmlFor='difficulty'>Difficulty</label>
-        <select name="difficulty" id="difficulty" value={habitForm.difficulty} onChange={handleChange}>
-          <option value="-1">-- Select a difficulty --</option>
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
-          <option value="Challenger">Challenger</option>
-          <option value="Goggins">Goggins</option>
-        </select>
-
-        <button type="submit">Create habit</button>
-      </fieldset>
-    </form>
+          <button type="submit">Create habit</button>
+        </fieldset>
+      </form>
+    </Main>
   )
 }
 

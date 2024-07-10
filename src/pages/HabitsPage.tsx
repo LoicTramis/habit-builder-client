@@ -3,6 +3,7 @@ import HabitList from "../components/HabitList";
 import service from "../service/api";
 import { AuthContext } from "../context/AuthContextWrapper";
 import { Habit } from "../types/Habit";
+import Main from "../components/Main";
 
 
 const HabitsPage = () => {
@@ -33,14 +34,13 @@ const HabitsPage = () => {
   const doneHabits = habits.filter((habit: Habit) => new Date(habit.endDate) > today);
 
   return (
-    <main>
-      <h2>Habits</h2>
+    <Main title="Explore habits">
       <section>
         <HabitList habits={upcomingHabits} status="Upcoming" />
         <HabitList habits={ongoingHabits} status="Ongoing" />
         <HabitList habits={doneHabits} status="Done" />
       </section>
-    </main>
+    </Main>
   );
 };
 

@@ -3,6 +3,7 @@ import GroupList from '../components/GroupList'
 import service from '../service/api'
 import { AuthContext } from '../context/AuthContextWrapper'
 import { Group } from '../types/Group'
+import Main from '../components/Main'
 
 const GroupsPage = () => {
   const [groups, setGroups] = useState<Group[] | null>(null)
@@ -25,12 +26,11 @@ const GroupsPage = () => {
   }
 
   return (
-    <main>
-      <h2>Groups</h2>
+    <Main title="Explore groups">
       <section>
         <GroupList groups={groups} />
       </section>
-    </main>
+    </Main>
   )
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Group } from '../types/Group'
 import service from '../service/api'
 import GroupList from '../components/GroupList'
+import Main from '../components/Main'
 
 const GroupUserPage = () => {
   const [groups, setGroups] = useState<Group | null>(null)
@@ -24,12 +25,11 @@ const GroupUserPage = () => {
   }
 
   return (
-    <main>
-      <h2>Groups</h2>
+    <Main title="My groups">
       <section>
         <GroupList groups={groups} />
       </section>
-    </main>
+    </Main>
   )
 }
 

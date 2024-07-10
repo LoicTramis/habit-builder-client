@@ -4,6 +4,7 @@ import HabitCard from "../components/HabitCard";
 import GroupCard from "../components/GroupCard";
 import { Habit } from "../types/Habit";
 import { Group } from "../types/Group";
+import Main from "../components/Main";
 
 const HomePage = () => {
   const [habits, setHabits] = useState<Habit[] | null>(null);
@@ -59,7 +60,7 @@ const HomePage = () => {
   })
 
   return (
-    <main>
+    <Main title="Welcome to habit builder">
       <article>
         <h2>Top Habits</h2>
         <ul>{habitsJSX}</ul>
@@ -69,7 +70,7 @@ const HomePage = () => {
         <h2>Top Groups</h2>
         <ul>{groupsJSX}</ul>
       </article>
-    </main>
+    </Main>
   );
 };
 

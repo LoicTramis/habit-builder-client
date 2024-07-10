@@ -1,8 +1,9 @@
 import React from 'react'
+import Main from '../components/Main'
 
 const GroupPage = () => {
   return (
-    <main>GroupPage</main>
+    <Main title="Group Detail">GroupPage</Main>
   )
 }
 

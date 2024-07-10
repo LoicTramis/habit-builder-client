@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Habit } from '../types/Habit'
 import service from '../service/api'
 import HabitList from '../components/HabitList'
+import Main from '../components/Main'
 
 const HabitUserPage = () => {
   const [habits, setHabits] = useState<Habit[] | null>(null)
@@ -30,14 +31,13 @@ const HabitUserPage = () => {
   const doneHabits = habits.filter((habit: Habit) => new Date(habit.endDate) < today)
 
   return (
-    <main>
-      <h2>Habits</h2>
+    <Main title="My Habits">
       <section>
         <HabitList habits={upcomingHabits} status="Upcoming" />
         <HabitList habits={ongoingHabits} status="Ongoing" />
         <HabitList habits={doneHabits} status="Done" />
       </section>
-    </main>
+    </Main>
   )
 }
 
