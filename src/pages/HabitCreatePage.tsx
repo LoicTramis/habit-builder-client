@@ -25,7 +25,7 @@ const HabitCreatePage = ({ setHabits }) => {
     */
     const name = (event.target as HTMLInputElement).name
     const value = (event.target as HTMLInputElement).value
-
+    console.log(name, value)
     setHabitForm(prevHabitForm => ({
       ...prevHabitForm,
       [name]: value

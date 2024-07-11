@@ -74,9 +74,8 @@ const Navbar = ({ habits, groups }) => {
     if (habits.length === 0) {
       return <li className="sub-element pl-2">You have no habit. <NavLink to="/habits">Browse</NavLink></li>
     }
-    console.dir(habits)
     const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username)
-    console.dir(filteredHabits)
+
     return filteredHabits.map((habit: Habit) => (
       <li key={habit._id} className="sub-element flex gap-2 px-1">
         <NavLink to={`/habits/${habit._id}`} className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
