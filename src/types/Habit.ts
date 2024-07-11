@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export type Habit = {
   _id: string;
   title: string;
@@ -5,10 +7,7 @@ export type Habit = {
   startDate: Date;
   endDate: Date;
   frequency: string;
-  creator: {
-    username: string;
-    email: string;
-  };
+  creator: User;
   difficulty: string;
-  members: string[];
+  members: User[];
 };

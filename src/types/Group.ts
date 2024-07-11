@@ -1,3 +1,6 @@
+import { Habit } from "./Habit"
+import { User } from "./User"
+
 export type Group = {
   _id: string,
   name: string,
@@ -6,6 +9,6 @@ export type Group = {
     username: string,
     email: string
   },
-  habits: string[],
-  members: string[]
+  habits: Habit[],
+  members: User[]
 }

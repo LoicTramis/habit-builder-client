@@ -6,7 +6,7 @@ const GroupList = ({ groups, title }) => {
   return (
     <article>
       <h2>{title}</h2>
-      <ul>
+      <ul className='grid grid-cols-3 gap-5 w-full justify-between'>
         {groupsJSX}
       </ul>
     </article>

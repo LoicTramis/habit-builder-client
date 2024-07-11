@@ -10,40 +10,19 @@ import HomeIcon from "./icons/HomeIcon";
 import ExploreIcon from "./icons/ExploreIcon";
 import HabitIcon from "./icons/HabitIcon";
 import GroupIcon from "./icons/GroupIcon";
+import { Habit } from "../types/Habit";
+import { Group } from "../types/Group";
+import { User } from "../types/User";
 
-const Navbar = () => {
+const Navbar = ({ habits, groups }) => {
   const modal = useRef(null);
   const [showPage, setShowPage] = useState(false);
   const authenticateUser = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleShowModal = (e: React.MouseEvent) => {
-    e.preventDefault();
-    modal.current.showModal();
-  };
-
-  const handleSwitchModal = () => {
-    setShowPage(!showPage);
-  };
-  const handleDisconnet = () => {
-    authenticateUser.disconnect();
-  };
-
-  const authUserJSX = () => {
-    return authenticateUser.isLoggedIn ? (
-      <>
-        <p>{authenticateUser.user.username}</p>
-        <button className="flex justify-between" id="profile" onClick={handleDisconnet}><LogoutIcon /></button>
-      </>
-    ) : (
-      <button className="w-full flex justify-between px-2 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950" id="login" onClick={handleShowModal}>
-        <p>Log in / Sign up</p>
-        <LoginIcon />
-      </button>
-    );
-  };
-
+  // =========================== */
+  // ========= HANDLES ========= */
+  // =========================== */
   const handleCreateHabit = () => {
     if (!authenticateUser.isLoggedIn) {
       // display message for log in
@@ -59,6 +38,71 @@ const Navbar = () => {
     }
     navigate("/createGroup");
   };
+
+  const handleShowModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    modal.current.showModal();
+  };
+
+  const handleSwitchModal = () => {
+    setShowPage(!showPage);
+  };
+  const handleDisconnet = () => {
+    authenticateUser.disconnect();
+  };
+
+  // ======================= */
+  // ========= JSX ========= */
+  // ======================= */
+  const authUserJSX = () => {
+    return authenticateUser.isLoggedIn ? (
+      <>
+        <p>{authenticateUser.user.username}</p>
+        <button className="flex justify-between" id="profile" onClick={handleDisconnet}><LogoutIcon /></button>
+      </>
+    ) : (
+      <button className="w-full flex justify-between px-2 py-[0.3rem] rounded-lg border-[1px] border-transparent
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950" id="login" onClick={handleShowModal}>
+        <p>Log in / Sign up</p>
+        <LoginIcon />
+      </button>
+    );
+  };
+
+  const habitsJSX = () => {
+    if (!habits) return
+    if (habits.length === 0) {
+      return <li className="sub-element pl-2">You have no habit. <NavLink to="/habits">Browse</NavLink></li>
+    }
+    console.dir(habits)
+    const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username)
+    console.dir(filteredHabits)
+    return filteredHabits.map((habit: Habit) => (
+      <li key={habit._id} className="sub-element flex gap-2 px-1">
+        <NavLink to={`/habits/${habit._id}`} className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950">
+          <HabitIcon />{habit.title}
+        </NavLink>
+      </li>
+    ))
+  }
+
+  const groupsJSX = () => {
+    if (!groups) return
+    if (groups.length === 0) {
+      return <li className="sub-element pl-2">You have no group. <NavLink to="/groups">Browse</NavLink></li>
+    }
+    const filteredGroups = groups.filter((group: Group) => group.admin.username === authenticateUser.user.username || group.members.some((member: User) => member.username === authenticateUser.user.username))
+    return filteredGroups.map((group: Group) => (
+      <li key={group._id} className="sub-element flex gap-2 px-1">
+        <NavLink to={`/habits/${group._id}`} className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+            hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950">
+          <GroupIcon />{group.name}
+        </NavLink>
+      </li>))
+  }
+
+
   return (
     <nav>
       <dialog ref={modal}>
@@ -78,6 +122,7 @@ const Navbar = () => {
           </>
         )}
       </dialog>
+
       <ul className="element">
         <li className="sub-title w-full flex justify-between">{authUserJSX()}</li>
       </ul>
@@ -110,9 +155,10 @@ const Navbar = () => {
               <NavLink to="/habits/in">My habits</NavLink>
             </li>
             {/* LIST OF HABITS HERE */}
+            {habitsJSX()}
             <li className="sub-element">
-              <button className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950" onClick={handleCreateHabit}><AddIcon />Add a habit</button>
+              <button className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent text-green-600
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-green-400 " onClick={handleCreateHabit}><AddIcon />Add a habit</button>
             </li>
           </ul>
 
@@ -121,9 +167,10 @@ const Navbar = () => {
               <NavLink to="/groups/in">My groups</NavLink>
             </li>
             {/* LIST OF GROUPS HERE */}
+            {groupsJSX()}
             <li className="sub-element">
-              <button className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950" onClick={handleCreateGroup}><AddIcon />Add a group</button>
+              <button className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent text-green-600
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-green-400 " onClick={handleCreateGroup}><AddIcon />Add a group</button>
             </li>
           </ul>
         </>

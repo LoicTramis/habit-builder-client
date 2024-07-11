@@ -2,17 +2,17 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContextWrapper'
 import service from '../service/api'
-import { Habit } from '../types/Habit'
 import Main from '../components/Main'
+import { Habit } from '../types/Habit'
 
-const HabitCreatePage = () => {
-  const [habitForm, setHabitForm] = useState<Habit | any>({
+const HabitCreatePage = ({ setHabits }) => {
+  const [habitForm, setHabitForm] = useState({
     title: "",
     description: "",
     startDate: "",
     endDate: "",
     frequency: "",
-    difficulty: ""
+    difficulty: "-1",
   })
   const authenticateUser = useContext(AuthContext)
   const navigate = useNavigate()
@@ -26,7 +26,7 @@ const HabitCreatePage = () => {
     const name = (event.target as HTMLInputElement).name
     const value = (event.target as HTMLInputElement).value
 
-    setHabitForm((prevHabitForm: Habit) => ({
+    setHabitForm(prevHabitForm => ({
       ...prevHabitForm,
       [name]: value
     }))
@@ -36,15 +36,18 @@ const HabitCreatePage = () => {
     event.preventDefault()
 
     try {
-
       const response = await service.post('api/habits', habitForm)
       console.log(response.data)
+      setHabits((prevHabits: Habit[]) => [
+        ...prevHabits,
+        response.data
+      ])
       setTimeout(() => {
         // TODO 
         // Don't use navigate
         // Make a pop up that show the form
         // Then success or not show option to navigate
-        navigate('/habits')
+        navigate('/habits/in')
       }, 300)
     } catch (error) {
       console.log(error)
@@ -56,29 +59,69 @@ const HabitCreatePage = () => {
   }
 
   return (
-    <Main title="Create a habit">
-      <form onSubmit={handleSubmitForm}>
-        <fieldset>
-          <legend>Create a habit</legend>
+    <Main title="Add a habit">
+      <form onSubmit={handleSubmitForm} className='flex justify-center mx-auto w-2/3'>
+        <fieldset className='w-full'>
+          <legend className='text-center text-xl font-bold'>What change do you want to make?</legend>
 
-          <label htmlFor='title'>Title</label>
-          <input type="text" name="title" id="title" value={habitForm.title} onChange={handleChange} />
+          <label htmlFor='title' className='flex flex-col text-lg font-bold mt-10'>
+            Title
+            <input
+              type="text"
+              name="title"
+              id="title"
+              value={habitForm.title}
+              onChange={handleChange}
+              className='px-5 py-3 bg-neutral-100 border border-neutral-300 rounded' />
+          </label>
 
-          <label htmlFor='description'>Description</label>
-          <textarea name="description" id="description" value={habitForm.description} onChange={handleChange}></textarea>
+          <label htmlFor='description' className='flex flex-col text-lg font-bold mt-10'>Description</label>
+          <textarea
+            name="description"
+            id="description"
+            value={habitForm.description}
+            onChange={handleChange}
+            rows={5}
+            className='my-2 px-5 py-3 bg-neutral-100 border border-neutral-300 rounded w-full'></textarea>
 
-          <label htmlFor='startDate'>Start date</label>
-          <input type='date' name="startDate" id="startDate" value={habitForm.startDate} onChange={handleChange}></input>
+          <label htmlFor='startDate' className='flex flex-col text-lg font-bold mt-10'>
+            Start date
+            <input
+              type='date'
+              name="startDate"
+              id="startDate"
+              value={habitForm.startDate}
+              onChange={handleChange}
+              className='' />
+          </label>
 
-          <label htmlFor='endDate'>End date</label>
-          <input type='date' name="endDate" id="endDate" value={habitForm.endDate} onChange={handleChange}></input>
+          <label htmlFor='endDate' className='flex text-lg font-bold mt-10'>End date</label>
+          <input
+            type='date'
+            name="endDate"
+            id="endDate"
+            value={habitForm.endDate}
+            onChange={handleChange}></input>
 
-          <label htmlFor='frequency'>Frequency</label>
-          <input type="text" name="frequency" id="frequency" value={habitForm.frequency} onChange={handleChange} />
+          <label htmlFor='frequency' className='flex flex-col text-lg font-bold mt-10'>
+            Frequency
+            <input
+              type="text"
+              name="frequency"
+              id="frequency"
+              value={habitForm.frequency}
+              onChange={handleChange}
+              className='px-5 py-3 bg-neutral-100 border border-neutral-300 rounded' />
+          </label>
 
-          <label htmlFor='difficulty'>Difficulty</label>
-          <select name="difficulty" id="difficulty" value={habitForm.difficulty} onChange={handleChange}>
-            <option value="-1">-- Select a difficulty --</option>
+          <label htmlFor='difficulty' className='flex text-lg font-bold mt-10'>Difficulty</label>
+          <select
+            name="difficulty"
+            id="difficulty"
+            value={habitForm.difficulty}
+            onChange={handleChange}
+            className=''>
+            <option value="-1" disabled>-- Select a difficulty --</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
@@ -86,7 +129,7 @@ const HabitCreatePage = () => {
             <option value="Goggins">Goggins</option>
           </select>
 
-          <button type="submit">Create habit</button>
+          <button type="submit" className='mt-10 p-2 text-lg text-neutral-800 font-bold flex bg-green-500 bg-opacity-70 border border-green-500 rounded hover:bg-opacity-100'>Create a new habit</button>
         </fieldset>
       </form>
     </Main>

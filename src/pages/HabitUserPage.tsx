@@ -7,7 +7,7 @@ import Main from '../components/Main'
 const HabitUserPage = () => {
   const [habits, setHabits] = useState<Habit[] | null>(null)
 
-  const fetchGroups = async () => {
+  const fetchHabits = async () => {
     try {
       const response = await service.get("/api/habits/in")
       setHabits(response.data)
@@ -17,7 +17,7 @@ const HabitUserPage = () => {
   }
 
   useEffect(() => {
-    fetchGroups()
+    fetchHabits()
   }, [])
 
   if (!habits) {
@@ -33,9 +33,9 @@ const HabitUserPage = () => {
   return (
     <Main title="My Habits">
       <section>
-        <HabitList habits={upcomingHabits} title="Upcoming" />
-        <HabitList habits={ongoingHabits} title="Ongoing" />
-        <HabitList habits={doneHabits} title="Done" />
+        <HabitList habits={upcomingHabits} setHabits={setHabits} title="Upcoming" />
+        <HabitList habits={ongoingHabits} setHabits={setHabits} title="Ongoing" />
+        <HabitList habits={doneHabits} setHabits={setHabits} title="Done" />
       </section>
     </Main>
   )

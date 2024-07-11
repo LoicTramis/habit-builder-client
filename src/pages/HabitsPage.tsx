@@ -1,14 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HabitList from "../components/HabitList";
 import service from "../service/api";
-import { AuthContext } from "../context/AuthContextWrapper";
 import { Habit } from "../types/Habit";
 import Main from "../components/Main";
 
 
 const HabitsPage = () => {
   const [habits, setHabits] = useState<Habit[] | null>(null);
-  const authenticateUser = useContext(AuthContext);
 
   const fetchHabits = async () => {
     try {
