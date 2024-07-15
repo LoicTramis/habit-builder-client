@@ -18,7 +18,6 @@ import CancelIcon from './icons/CancelIcon'
 const HabitCard = ({ habits, setHabits, _id, title, creator, difficulty, description, startDate, endDate, frequency, members, rank = 0 }) => {
   const [editMode, setEditMode] = useState(false)
   const [habitForm, setHabitForm] = useState({
-    title: "",
     description: "",
     difficulty: "-1",
     frequency: "",
