@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Habit } from '../types/Habit'
 import service from '../service/api'
 import HabitList from '../components/HabitList'
 import Main from '../components/Main'
+import { HabitContext } from '../context/HabitContextWrapper'
 
 const HabitUserPage = () => {
-  const [habits, setHabits] = useState<Habit[] | null>(null)
-
+  const { habits, setHabits } = useContext(HabitContext)
   const fetchHabits = async () => {
     try {
       const response = await service.get("/api/habits/in")
@@ -33,9 +33,9 @@ const HabitUserPage = () => {
   return (
     <Main title="My Habits">
       <section>
-        <HabitList habits={upcomingHabits} setHabits={setHabits} title="Upcoming" />
-        <HabitList habits={ongoingHabits} setHabits={setHabits} title="Ongoing" />
-        <HabitList habits={doneHabits} setHabits={setHabits} title="Done" />
+        <HabitList habits={upcomingHabits} title="Upcoming" />
+        <HabitList habits={ongoingHabits} title="Ongoing" />
+        <HabitList habits={doneHabits} title="Done" />
       </section>
     </Main>
   )

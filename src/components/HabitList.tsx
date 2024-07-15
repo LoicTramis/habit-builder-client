@@ -1,8 +1,17 @@
 import HabitCard from './HabitCard'
 import { Habit } from '../types/Habit'
+import { useContext } from 'react'
+import { HabitContext } from '../context/HabitContextWrapper'
 
-const HabitList = ({ habits, setHabits, title }) => {
-  const habitsJSX = habits.map((habit: Habit, index: number) => <HabitCard key={habit._id} habits={habits} setHabits={setHabits} rank={index + 1} {...habit} />)
+const HabitList = ({ habits, title }) => {
+
+  const habitsJSX = habits.map((habit: Habit, index: number) => (
+    <HabitCard
+      key={habit._id}
+      rank={index + 1}
+      {...habit}
+    />
+  ))
 
   return (
     <article>

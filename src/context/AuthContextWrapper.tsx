@@ -3,19 +3,16 @@ import service from "../service/api.ts";
 
 export const AuthContext = createContext(null);
 
-function AuthContextWrapper({ children }) {
+const AuthContextWrapper = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const storeToken = (token: string): void => localStorage.setItem("authToken", token);
+
   const removeToken = () => localStorage.removeItem("authToken");
 
-  useEffect(() => {
-    authenticateUser();
-  }, []);
-
-  async function authenticateUser() {
+  const authenticateUser = async () => {
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
@@ -38,10 +35,15 @@ function AuthContextWrapper({ children }) {
       console.log(error);
     }
   }
-  function disconnect() {
+
+  const disconnect = () => {
     removeToken();
     authenticateUser();
   }
+
+  useEffect(() => {
+    authenticateUser();
+  }, []);
 
   const contextValues = {
     user,
@@ -52,7 +54,10 @@ function AuthContextWrapper({ children }) {
     isLoggedIn,
     disconnect,
   };
-  return <AuthContext.Provider value={contextValues}>{children}</AuthContext.Provider>;
+
+  return (
+    <AuthContext.Provider value={contextValues}>{children}</AuthContext.Provider>
+  )
 }
 
 export default AuthContextWrapper;

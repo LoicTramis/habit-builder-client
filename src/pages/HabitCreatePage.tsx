@@ -25,7 +25,7 @@ const HabitCreatePage = ({ setHabits }) => {
     */
     const name = (event.target as HTMLInputElement).name
     const value = (event.target as HTMLInputElement).value
-    console.log(name, value)
+
     setHabitForm(prevHabitForm => ({
       ...prevHabitForm,
       [name]: value
@@ -72,6 +72,7 @@ const HabitCreatePage = ({ setHabits }) => {
               id="title"
               value={habitForm.title}
               onChange={handleChange}
+              required
               className='px-5 py-3 bg-neutral-100 border border-neutral-300 rounded' />
           </label>
 
@@ -82,6 +83,7 @@ const HabitCreatePage = ({ setHabits }) => {
             value={habitForm.description}
             onChange={handleChange}
             rows={5}
+            required
             className='my-2 px-5 py-3 bg-neutral-100 border border-neutral-300 rounded w-full'></textarea>
 
           <label htmlFor='startDate' className='flex flex-col text-lg font-bold mt-10'>
@@ -111,6 +113,7 @@ const HabitCreatePage = ({ setHabits }) => {
               id="frequency"
               value={habitForm.frequency}
               onChange={handleChange}
+              required
               className='px-5 py-3 bg-neutral-100 border border-neutral-300 rounded' />
           </label>
 
@@ -120,6 +123,7 @@ const HabitCreatePage = ({ setHabits }) => {
             id="difficulty"
             value={habitForm.difficulty}
             onChange={handleChange}
+            required
             className=''>
             <option value="-1" disabled>-- Select a difficulty --</option>
             <option value="Easy">Easy</option>

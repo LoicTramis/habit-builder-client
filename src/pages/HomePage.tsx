@@ -3,8 +3,12 @@ import { Group } from "../types/Group";
 import Main from "../components/Main";
 import HabitList from "../components/HabitList";
 import GroupList from "../components/GroupList";
+import { HabitContext } from "../context/HabitContextWrapper";
+import { useContext } from "react";
 
-const HomePage = ({ habits, setHabits, groups }) => {
+const HomePage = ({ groups }) => {
+  const { habits } = useContext(HabitContext)
+
   if (!habits || !groups) {
     return <Main title=""><p>Loading</p></Main>
   }
@@ -19,7 +23,7 @@ const HomePage = ({ habits, setHabits, groups }) => {
 
   return (
     <Main title="Welcome to habit builder">
-      <HabitList habits={filteredHabits} setHabits={setHabits} title="Top Habits" />
+      <HabitList habits={filteredHabits} title="Top Habits" />
       <GroupList groups={filteredGroups} title="Top Groups" />
     </Main>
   );

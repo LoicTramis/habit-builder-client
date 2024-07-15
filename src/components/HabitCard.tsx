@@ -14,8 +14,9 @@ import DeleteIcon from './icons/DeleteIcon'
 import EditIcon from './icons/EditIcon'
 import SaveIcon from './icons/SaveIcon'
 import CancelIcon from './icons/CancelIcon'
+import { HabitContext } from '../context/HabitContextWrapper'
 
-const HabitCard = ({ habits, setHabits, _id, title, creator, difficulty, description, startDate, endDate, frequency, members, rank = 0 }) => {
+const HabitCard = ({ _id, title, creator, difficulty, description, startDate, endDate, frequency, members, rank = 0 }) => {
   const [editMode, setEditMode] = useState(false)
   const [habitForm, setHabitForm] = useState({
     description: "",
@@ -25,12 +26,13 @@ const HabitCard = ({ habits, setHabits, _id, title, creator, difficulty, descrip
     endDate: ""
   })
   const authenticateUser = useContext(AuthContext)
+  const { habits, setHabits } = useContext(HabitContext)
   const navigate = useNavigate()
 
   const handleDelete = async () => {
     // TODO: put a loader somewhere
     const deletedHabit = await service.delete(`/api/habits/${_id}`)
-    console.log(deletedHabit)
+
     const newHabits = habits.filter((habit: Habit) => habit._id !== _id)
     setHabits(newHabits)
 
@@ -62,13 +64,14 @@ const HabitCard = ({ habits, setHabits, _id, title, creator, difficulty, descrip
     event.preventDefault()
     try {
       const response = await service.put(`/api/habits/${_id}`, habitForm)
-      const updatedHabit = habits.map((habit: Habit) => {
-        if (response.data._id === habit._id) {
+      const updatedHabits = habits.map(habit => {
+        if (habit._id === response.data._id) {
           return response.data
         }
         return habit
       })
-      setHabits(updatedHabit)
+
+      setHabits(updatedHabits)
     } catch (error) {
       console.log(error)
     } finally {

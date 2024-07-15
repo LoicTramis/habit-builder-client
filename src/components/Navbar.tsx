@@ -13,12 +13,14 @@ import GroupIcon from "./icons/GroupIcon";
 import { Habit } from "../types/Habit";
 import { Group } from "../types/Group";
 import { User } from "../types/User";
+import { HabitContext } from "../context/HabitContextWrapper";
 
-const Navbar = ({ habits, groups }) => {
-  const modal = useRef(null);
+const Navbar = ({ groups }) => {
+  const { habits } = useContext(HabitContext)
   const [showPage, setShowPage] = useState(false);
   const authenticateUser = useContext(AuthContext);
   const navigate = useNavigate();
+  const modal = useRef(null);
 
   // =========================== */
   // ========= HANDLES ========= */
@@ -47,6 +49,7 @@ const Navbar = ({ habits, groups }) => {
   const handleSwitchModal = () => {
     setShowPage(!showPage);
   };
+
   const handleDisconnet = () => {
     authenticateUser.disconnect();
   };
@@ -74,6 +77,7 @@ const Navbar = ({ habits, groups }) => {
     if (habits.length === 0) {
       return <li className="sub-element pl-2">You have no habit. <NavLink to="/habits">Browse</NavLink></li>
     }
+    console.log(habits)
     const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username)
 
     return filteredHabits.map((habit: Habit) => (
@@ -125,6 +129,7 @@ const Navbar = ({ habits, groups }) => {
       <ul className="element">
         <li className="sub-title w-full flex justify-between">{authUserJSX()}</li>
       </ul>
+
       <ul className="element">
         <li className="sub-title">Discover</li>
         <li className="sub-element px-0">

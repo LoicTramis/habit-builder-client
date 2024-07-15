@@ -9,17 +9,18 @@ import GroupsPage from './pages/GroupsPage'
 import GroupPage from './pages/GroupPage'
 import GroupUserPage from './pages/GroupUserPage.tsx'
 import GroupCreatePage from './pages/GroupCreatePage'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Habit } from './types/Habit.ts'
 import { Group } from './types/Group.ts'
 import service from './service/api.ts'
+import { HabitContext } from './context/HabitContextWrapper.tsx'
 
 // ? For improvement
 // https://blog.logrocket.com/building-react-modal-module-with-react-router/
 
 function App() {
-  const [habits, setHabits] = useState<Habit[] | null>(null);
   const [groups, setGroups] = useState<Group[] | null>(null);
+  const { habits, setHabits } = useContext(HabitContext)
 
   const fetchHabits = async () => {
     try {
@@ -48,11 +49,11 @@ function App() {
 
   return (
     <>
-      <Aside habits={habits} groups={groups} />
+      <Aside groups={groups} />
 
       <Routes>
         {/* HOME ROUTE */}
-        <Route path="/" element={<HomePage habits={habits} setHabits={setHabits} groups={groups} />} />
+        <Route path="/" element={<HomePage groups={groups} />} />
 
         {/* HABITS ROUTE */}
         <Route path="/habits">
