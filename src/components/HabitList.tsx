@@ -1,7 +1,5 @@
 import HabitCard from './HabitCard'
 import { Habit } from '../types/Habit'
-import { useContext } from 'react'
-import { HabitContext } from '../context/HabitContextWrapper'
 
 const HabitList = ({ habits, title }) => {
 
@@ -15,7 +13,7 @@ const HabitList = ({ habits, title }) => {
 
   return (
     <article>
-      <h2>{title}</h2>
+      <h2 className='my-3'>{title}</h2>
       <ul className='grid grid-cols-3 gap-5 w-full justify-between'>
         {habitsJSX}
       </ul>

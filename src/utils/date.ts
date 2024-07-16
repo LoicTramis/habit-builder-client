@@ -29,12 +29,12 @@ const simpleFormatDate = (ISOStringDate: Date) => {
   const dayWeek = shortDayNames[newDate.getDay()]
   const dayMonth = newDate.getDate()
   const month = shortMonthNames[newDate.getMonth()]
-  const year = newDate.getFullYear().toString().at(-2) + newDate.getFullYear().toString().at(-1)
+  const year = newDate.getFullYear().toString()
   const hours = newDate.getHours() > 13 ? newDate.getHours() - 12 : newDate.getHours()
   const minutes = newDate.getMinutes()
   const meridiem = newDate.getHours() < 13 ? "am" : "pm"
 
-  return `${dayMonth} ${month} ${year} - ${hours} ${meridiem}`
+  return `${dayMonth} ${month}, ${year}`
 }
 
 export {

@@ -10,7 +10,6 @@ import GroupPage from './pages/GroupPage'
 import GroupUserPage from './pages/GroupUserPage.tsx'
 import GroupCreatePage from './pages/GroupCreatePage'
 import { useContext, useEffect, useState } from 'react'
-import { Habit } from './types/Habit.ts'
 import { Group } from './types/Group.ts'
 import service from './service/api.ts'
 import { HabitContext } from './context/HabitContextWrapper.tsx'
@@ -20,7 +19,7 @@ import { HabitContext } from './context/HabitContextWrapper.tsx'
 
 function App() {
   const [groups, setGroups] = useState<Group[] | null>(null);
-  const { habits, setHabits } = useContext(HabitContext)
+  const { setHabits } = useContext(HabitContext)
 
   const fetchHabits = async () => {
     try {
@@ -47,11 +46,15 @@ function App() {
     fetchGroups();
   }, []);
 
+  /**
+   * Put a Route wrapper between the routes and use Outlet
+   */
   return (
     <>
       <Aside groups={groups} />
 
       <Routes>
+
         {/* HOME ROUTE */}
         <Route path="/" element={<HomePage groups={groups} />} />
 
