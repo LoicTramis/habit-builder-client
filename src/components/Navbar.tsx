@@ -131,15 +131,14 @@ const Navbar = ({ groups }) => {
       </ul>
 
       <ul className="element">
-        <li className="sub-title">Discover</li>
-        <li className="sub-element px-0">
-          <NavLink to="/" className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+        <li className="sub-title">
+          <NavLink to="/" className="flex items-center gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
                 hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"><HomeIcon />Home</NavLink>
         </li>
-        <li className="sub-element">
-          <NavLink to='/' className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"><ExploreIcon />Explore</NavLink>
-        </li>
+      </ul>
+
+      <ul className="element">
+        <li className="sub-title">Discover</li>
         <li className="sub-element">
           <NavLink to="/habits" className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
                 hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"><HabitIcon />Habits</NavLink>

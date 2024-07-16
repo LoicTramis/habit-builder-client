@@ -39,6 +39,9 @@
 #profile:hover > svg {
   animation: 0.2s ease-in-out 0s 2 alternate slide;
 }
+#join:hover > svg {
+  animation: 0.175s ease-in-out 0s 2 alternate reverse-slide;
+}
 
 @keyframes slide {
   from {
@@ -46,6 +49,15 @@
   }
   to {
     transform: translateX(-10px);
+  }
+}
+
+@keyframes reverse-slide {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(10px);
   }
 }
 

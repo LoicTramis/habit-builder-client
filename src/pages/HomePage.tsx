@@ -23,8 +23,10 @@ const HomePage = ({ groups }) => {
 
   return (
     <Main title="Welcome to habit builder">
-      <HabitList habits={filteredHabits} title="Top Habits" />
-      <GroupList groups={filteredGroups} title="Top Groups" />
+      <article className="grid grid-cols-2">
+        <HabitList habits={filteredHabits} title="Top Habits" />
+        <GroupList groups={filteredGroups} title="Top Groups" />
+      </article>
     </Main>
   );
 };

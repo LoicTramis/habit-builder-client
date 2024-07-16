@@ -16,6 +16,7 @@ import SaveIcon from './icons/SaveIcon'
 import CancelIcon from './icons/CancelIcon'
 import { HabitContext } from '../context/HabitContextWrapper'
 import UserIcon from './icons/UserIcon'
+import JoinIcon from './icons/JoinIcon'
 
 const HabitCard = ({ _id, title, creator, difficulty, description, startDate, endDate, frequency, members, rank = 0, detailed = false }) => {
   const [editMode, setEditMode] = useState(false)
@@ -197,14 +198,11 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     } else {
       // date and difficulty
       return <>
-        <article>
+        <article className='flex flex-row gap-3'>
           <p className='flex items-end gap-2 px-2 py-1 bg-neutral-100 rounded'>
             <DateIcon />
             {simpleFormatDate(startDate)} - {simpleFormatDate(endDate)}
           </p>
-        </article>
-
-        <article className='my-2'>
           {difficulty === "Easy" && <p className='px-2 py-1 bg-emerald-200 text-emerald-800 rounded-md'>{difficulty}</p>}
           {difficulty === "Medium" && <p className='px-2 py-1 bg-orange-200 text-orange-800 rounded-md'>{difficulty}</p>}
           {difficulty === "Hard" && <p className='px-2 py-1 bg-red-200 text-red-800 rounded-md'>{difficulty}</p>}
@@ -212,16 +210,29 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
           {difficulty === "Goggins" && <p className='px-2 py-1 bg-neutral-200 text-neutral-800 rounded-md'>{difficulty}</p>}
         </article>
 
-        <article className='flex '>
-          <div className='border-2 rounded-[50%] border-[#f6f6f6] p-1 text-red-400 bg-red-300'>
-            <UserIcon stroke="#f87171" fill="#f87171" />
-          </div>
-          <div className='-translate-x-3 border-2 rounded-[50%] border-[#f6f6f6] p-1 text-blue-400 bg-blue-300'>
-            <UserIcon stroke="#60a5fa" fill="#60a5fa" />
-          </div>
-          <div className='-translate-x-6 border-2 rounded-[50%] border-[#f6f6f6] p-1 text-emerald-400 bg-emerald-300'>
-            <UserIcon stroke="#34d399" fill="#34d399" />
-          </div>
+        <article className='text-left m-2'>
+          <p>{description}</p>
+        </article>
+
+        <article className='flex justify-between items-center w-full mt-7'>
+          <section className='flex items-center'>
+            <div className='border-2 rounded-[50%] border-[#f6f6f6] p-1 text-red-400 bg-red-300'>
+              <UserIcon stroke="#f87171" fill="#f87171" />
+            </div>
+            <div className='-translate-x-3 border-2 rounded-[50%] border-[#f6f6f6] p-1 text-blue-400 bg-blue-300'>
+              <UserIcon stroke="#60a5fa" fill="#60a5fa" />
+            </div>
+            <div className='-translate-x-6 border-2 rounded-[50%] border-[#f6f6f6] p-1 text-emerald-400 bg-emerald-300'>
+              <UserIcon stroke="#34d399" fill="#34d399" />
+            </div>
+            <p className='-translate-x-5'>+ 5 participants</p>
+          </section>
+          <section>
+            <button id='join' className='flex gap-1 bg-sky-50 border border-sky-500 rounded mr-3 px-3 py-1'>
+              <p className='font-bold text-sky-600'>Visit</p>
+              <JoinIcon color="#0369a1" />
+            </button>
+          </section>
         </article>
       </>
       // members and groups
@@ -229,7 +240,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   }
   // Try a grid layout to align content on the left
   return (
-    <li className='border-2 bg-white flex flex-col rounded-2xl justify-center items-start p-2 basis-1/3 w-full h-full'>
+    <li className='flex flex-col h-fit border-2 bg-white  rounded-xl justify-around items-start gap-3 p-3 basis-1/3 w-full'>
       <h3 className='text-neutral-950 text-lg font-bold flex flex-row items-center'>
         {rank !== 0
           ? (<><HashtagIcon strokeWidth={2} size={"size-4"} /> {rank} - {title}</>)

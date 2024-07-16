@@ -7,6 +7,15 @@ _A progress everyday will go a very long way_
 
 Build good habit by setting up goal, forming group around that goal and putting the work to make that change
 
+<!-- 
+TODO
+- Display numbers of participant dynamically
+- Detailed habits page
+- Fix end date display
+- Add join a habit -> Update a habit
+- Same for group
+- Make a search bar
+-->
 
 ## Create a group habit
 - set up a goal
