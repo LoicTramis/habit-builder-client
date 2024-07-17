@@ -77,7 +77,6 @@ const Navbar = ({ groups }) => {
     if (habits.length === 0) {
       return <li className="sub-element pl-2">You have no habit. <NavLink to="/habits">Browse</NavLink></li>
     }
-    console.log(habits)
     const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username)
 
     return filteredHabits.map((habit: Habit) => (
@@ -108,19 +107,19 @@ const Navbar = ({ groups }) => {
 
   return (
     <nav>
-      <dialog ref={modal}>
+      <dialog ref={modal} className="rounded-lg w-1/3 p-5">
         {showPage ? (
           <>
             <SignupPage modal={modal} showPage={showPage} setShowPage={setShowPage} />
-            <p>
-              Already have an account? <button onClick={handleSwitchModal}>Login.</button>
+            <p className="mt-5 flex gap-4 justify-end">
+              Already have an account? <button onClick={handleSwitchModal} className="text-blue-500 underline">Login.</button>
             </p>
           </>
         ) : (
           <>
             <LoginPage modal={modal} />
-            <p>
-              No account? <button onClick={handleSwitchModal}>Sign up!</button>
+            <p className="mt-5 flex gap-4 justify-end">
+              No account? <button onClick={handleSwitchModal} className="text-blue-500 underline">Sign up!</button>
             </p>
           </>
         )}
@@ -151,7 +150,8 @@ const Navbar = ({ groups }) => {
 
 
       {/* Auth user only */}
-      {authenticateUser.isLoggedIn &&
+      {
+        authenticateUser.isLoggedIn &&
         <>
           <ul className="element">
             <li className="sub-title">
@@ -178,7 +178,7 @@ const Navbar = ({ groups }) => {
           </ul>
         </>
       }
-    </nav>
+    </nav >
   );
 };
 

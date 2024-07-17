@@ -48,25 +48,34 @@ const LoginPage = ({ modal }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>LOG IN</legend>
-        <div>
-          <label htmlFor="email">Email: </label>
-          <input type="email" id="email" value={email} onChange={handleChange} />
-        </div>
-        <div>
-          <label htmlFor="username">Password: </label>
+      <fieldset className='flex flex-col gap-5'>
+        <legend className='font-bold text-2xl my-5'>Log in</legend>
+
+        <section className='flex flex-col'>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={handleChange}
+            className='p-2 border-2 border-neutral-200 rounded'
+          />
+        </section>
+
+        <section className='flex flex-col'>
+          <label htmlFor="username">Password</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={handleChange}
+            className='p-2 border-2 border-neutral-200 rounded'
           />
-        </div>
+        </section>
 
         <p className="error">{errorMessage}</p>
 
-        <button>Login</button>
+        <button className='p-2 rounded bg-blue-600 text-lg text-white'>Log in</button>
       </fieldset>
     </form>
   )

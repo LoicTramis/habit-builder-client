@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Main from '../components/Main'
 import { Habit } from '../types/Habit'
 import { useParams } from 'react-router-dom'
@@ -31,7 +31,7 @@ const HabitDetailPage = () => {
 
   return (
     <Main title="Habit Detail">
-      <HabitCard {...habit[0]} />
+      <HabitCard {...habit[0]} detailed={true} />
     </Main>
   )
 }

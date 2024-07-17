@@ -33,9 +33,11 @@ const HabitsPage = () => {
 
   return (
     <Main title="Explore habits">
-      <HabitList habits={upcomingHabits} setHabits={setHabits} title="Upcoming" />
-      <HabitList habits={ongoingHabits} setHabits={setHabits} title="Ongoing" />
-      <HabitList habits={doneHabits} setHabits={setHabits} title="Done" />
+      <article className="grid grid-cols-3">
+        <HabitList habits={upcomingHabits} title="Upcoming" />
+        <HabitList habits={ongoingHabits} title="Ongoing" />
+        <HabitList habits={doneHabits} title="Done" />
+      </article>
     </Main>
   );
 };

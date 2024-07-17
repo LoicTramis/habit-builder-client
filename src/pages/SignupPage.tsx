@@ -38,35 +38,38 @@ const SignupPage = ({ modal, showPage, setShowPage }) => {
   const { username, password, email } = formData
   return (
     <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>SIGN UP</legend>
-        <div>
+      <fieldset className='flex flex-col gap-5'>
+        <legend className='font-bold text-2xl my-5'>Sign up</legend>
+        <section className='flex flex-col'>
           <label htmlFor="username">Username: </label>
           <input
             type="text"
             id="username"
             value={username}
             onChange={handleChange}
+            className='p-2 border-2 border-neutral-200 rounded'
           />
-        </div>
-        <div>
+        </section>
+        <section className='flex flex-col'>
           <label htmlFor="email">Email: </label>
-          <input type="email" id="email" value={email} onChange={handleChange} />
-        </div>
-        <div>
+          <input type="email" id="email" value={email} onChange={handleChange}
+            className='p-2 border-2 border-neutral-200 rounded'
+          />
+        </section>
+        <section className='flex flex-col'>
           <label htmlFor="username">Password: </label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={handleChange}
+            className='p-2 border-2 border-neutral-200 rounded'
           />
-        </div>
+        </section>
 
         <p className="error">{errorMessage}</p>
 
-
-        <button>Sign up</button>
+        <button className='p-2 rounded bg-blue-600 text-lg text-white'>Sign up</button>
       </fieldset>
     </form>
   )

@@ -22,7 +22,7 @@ const formatDate = (ISOStringDate: Date) => {
   const minutes = newDate.getMinutes()
   const meridiem = hours < 13 ? "AM" : "PM"
 
-  return `${dayWeek}, ${dayMonth} ${month} ${year} at ${hours}:${minutes} ${meridiem}`
+  return `${dayWeek}, ${dayMonth} ${month} ${year}`
 }
 const simpleFormatDate = (ISOStringDate: Date) => {
   const newDate = new Date(ISOStringDate)
@@ -39,5 +39,6 @@ const simpleFormatDate = (ISOStringDate: Date) => {
 
 export {
   formatDate,
-  simpleFormatDate
+  simpleFormatDate,
+  monthNames,
 }

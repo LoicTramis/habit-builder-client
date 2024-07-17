@@ -31,7 +31,7 @@
     width: theme(width.full);
   }
   .gradient {
-    background: linear-gradient(to right, #fff200, #ef2576);
+    background: linear-gradient(to right, #0071ff, #d80086);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
