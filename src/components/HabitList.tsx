@@ -3,7 +3,7 @@ import { Habit } from '../types/Habit'
 
 const HabitList = ({ habits, title }) => {
   const habitsJSX = habits.map((habit: Habit, index: number) => (
-    <HabitCard key={habit._id} rank={index + 1} {...habit} />
+    <HabitCard key={habit._id} {...habit} />
   ))
 
   return (

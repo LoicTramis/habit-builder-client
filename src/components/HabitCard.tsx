@@ -31,7 +31,7 @@ const colors = [
   ["-translate-x-15 text-red-400 bg-red-300", "#34d399"],
 ]
 
-const HabitCard = ({ _id, title, creator, difficulty, description, startDate, endDate, frequency, members, rank = 0, detailed = false }) => {
+const HabitCard = ({ _id, title, creator, difficulty, description, startDate, endDate, frequency, members, detailed = false }) => {
   const [editMode, setEditMode] = useState(false)
   const [habitForm, setHabitForm] = useState({
     description: "",
@@ -101,7 +101,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     }
   }
 
-  const handleVisit = (event) => {
+  const handleView = (event) => {
     event.preventDefault()
     navigate(`/habits/${_id}`)
   }
@@ -312,8 +312,8 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
             {members.length > 3 && <p className='-translate-x-4'>+ {members.length - 3} participants</p>}
           </section>
           <section>
-            <button id='join' onClick={handleVisit} className='flex gap-1 bg-sky-50 border border-sky-500 rounded mr-3 px-3 py-1'>
-              <p className='font-bold text-sky-600'>Visit</p>
+            <button id='join' onClick={handleView} className='flex gap-1 bg-sky-50 border border-sky-500 rounded mr-3 px-3 py-1'>
+              <p className='font-bold text-sky-600'>View</p>
               <JoinIcon color="#0369a1" />
             </button>
           </section>
@@ -325,12 +325,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   // Try a grid layout to align content on the left
   return (
     <li key={_id} className='flex flex-col h-fit border-2 bg-white  rounded-xl justify-around items-start gap-3 p-3 basis-1/3 w-full'>
-      <h3 className='text-neutral-950 text-lg font-bold flex flex-row items-center'>
-        {rank !== 0
-          ? (<><HashtagIcon strokeWidth={2} size={"size-4"} /> {rank} - {title}</>)
-          : (title)
-        }
-      </h3>
+      <h3 className='text-neutral-950 text-lg font-bold flex flex-row items-center'>{title}</h3>
       {habitContentJSX()}
     </li >
   )
