@@ -5,7 +5,6 @@ import DescriptionIcon from './icons/DescriptionIcon'
 import DifficultyIcon from './icons/DifficultyIcon'
 import FrequencyIcon from './icons/FrequencyIcon'
 import GroupIcon from './icons/GroupIcon'
-import HashtagIcon from './icons/HashtagIcon'
 import { AuthContext } from '../context/AuthContextWrapper'
 import service from '../service/api'
 import { useNavigate } from 'react-router-dom'
@@ -116,6 +115,36 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     }
   }
 
+  const handleJoin = async () => {
+    const response = await service.patch(`/api/habits/add/${_id}`)
+    const updatedHabits = habits.map((habit: Habit) => {
+      if (habit._id === response.data._id) {
+        return response.data
+      }
+      return habit
+    })
+    setHabits(updatedHabits)
+    setTimeout(() => {
+      navigate("/habits/in")
+      // TODO: and display a message somewhere too
+    }, 300)
+  }
+
+  const handleLeave = async () => {
+    const response = await service.patch(`/api/habits/remove/${_id}`)
+    const updatedHabits = habits.map((habit: Habit) => {
+      if (habit._id === response.data._id) {
+        return response.data
+      }
+      return habit
+    })
+    setHabits(updatedHabits)
+    setTimeout(() => {
+      navigate("/habits/in")
+      // TODO: and display a message somewhere too
+    }, 300)
+  }
+
   const habitContentJSX = () => {
     if (detailed) {
       if (editMode) {
@@ -199,7 +228,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
           {/* DISPLAY OF 
             - Description
             - Members */}
-
           <div className='flex flex-col basis-1/3'>
             <article>
               <p className='px-4 pt-2 flex justify-start items-center gap-2 text-neutral-950 font-bold'><DescriptionIcon />Description</p>
@@ -223,12 +251,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
               </ul>
             </article>
 
-            {authenticateUser.isLoggedIn && authenticateUser.user._id === creator._id &&
-              <article className='flex justify-between'>
-                <button onClick={handleDelete} className='flex items-start gap-1 m-3 p-2 font-bold text-red-500 opacity-70 hover:opacity-100'><DeleteIcon size={"size-5"} />Delete</button>
-                <button onClick={handleEdit} className='flex items-start gap-1 m-3 p-2 font-bold text-blue-500 opacity-70 hover:opacity-100'><EditIcon size={"size-5"} />Edit</button>
-              </article>
-            }
           </div>
           {/* DISPLAY OF 
             - Month
@@ -241,29 +263,32 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
                 <button onClick={() => handleSideMonth("next")} className='p-1 hover:bg-neutral-100 rounded'><ChevronRight /></button>
               </section>
             </article>
+
             <article>
               <ul className='col-span-3'>
                 {getCalendar(startDay.getFullYear(), calendarMonth).map((line: object[], index: number) => (
                   <li key={index} className='flex justify-center '>
-                    {line.map((day: Date) => {
-                      // CSS for day of the month and side months
-                      let color = ""
-                      if (day.getMonth() === calendarMonth) {
-                        color = "text-neutral-950"
-                      } else {
-                        color = "text-neutral-300"
-                      }
-                      // CSS for start day
-                      if (day.getDate() === startDay.getDate() && day.getMonth() === startDay.getMonth()) {
-                        color = " bg-indigo-200 text-indigo-800 border-indigo-300"
-                      }
-                      // CSS for end day
-                      if (day.getDate() === endDay.getDate() && day.getMonth() === endDay.getMonth()) {
-                        color = " bg-pink-200 text-pink-800 border-pink-300"
-                      }
+                    <ul className='flex'>
+                      {line.map((day: Date) => {
+                        // CSS for day of the month and side months
+                        let color = ""
+                        if (day.getMonth() === calendarMonth) {
+                          color = "text-neutral-950"
+                        } else {
+                          color = "text-neutral-300"
+                        }
+                        // CSS for start day
+                        if (day.getDate() === startDay.getDate() && day.getMonth() === startDay.getMonth()) {
+                          color = " bg-indigo-200 text-indigo-800 border-indigo-300"
+                        }
+                        // CSS for end day
+                        if (day.getDate() === endDay.getDate() && day.getMonth() === endDay.getMonth()) {
+                          color = " bg-pink-200 text-pink-800 border-pink-300"
+                        }
 
-                      return <li key={day.getDay()} className={`border rounded w-12 h-12 p-4 m-1  ${color} flex justify-center items-center`}>{day.getDate()}</li>
-                    })}
+                        return <li key={day.getDate()} className={`border rounded w-12 h-12 p-4 m-1  ${color} flex justify-center items-center`}>{day.getDate()}</li>
+                      })}
+                    </ul>
                   </li>
                 ))}
               </ul>
@@ -280,6 +305,33 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
               <p className='col-span-2 text-[#060606]'>{formatDate(endDate)}</p>
             </article>
           </div>
+        </section>
+        <section className='flex flex-row'>
+          {authenticateUser.isLoggedIn
+            && (members.some((member: User) => member._id === authenticateUser.user._id) || creator._id === authenticateUser.user._id)
+            &&
+            <article className='flex justify-between items-center'>
+              <button id='join' onClick={handleLeave} className='flex gap-1 h-fit bg-red-50 border border-red-500 text-red-600 rounded mr-3 px-3 py-1'>
+                <p className='font-bold'>Leave habit</p>
+              </button>
+            </article>
+          }
+          {
+            authenticateUser.isLoggedIn
+            && (members.some((member: User) => member._id !== authenticateUser.user._id) || creator._id !== authenticateUser.user._id)
+            &&
+            <article className='flex justify-between'>
+              <button id='join' onClick={handleJoin} className='flex gap-1 bg-sky-50 border border-sky-500 rounded mr-3 px-3 py-1'>
+                <p className='font-bold text-sky-600'>Join</p>
+              </button>
+            </article>
+          }
+          {authenticateUser.isLoggedIn && authenticateUser.user._id === creator._id &&
+            <article className='flex justify-between '>
+              <button onClick={handleDelete} className='flex items-start gap-1 m-3 p-2 font-bold text-red-500 opacity-70 hover:opacity-100'><DeleteIcon size={"size-5"} />Delete</button>
+              <button onClick={handleEdit} className='flex items-start gap-1 m-3 p-2 font-bold text-blue-500 opacity-70 hover:opacity-100'><EditIcon size={"size-5"} />Edit</button>
+            </article>
+          }
         </section>
       </>
     } else {
@@ -303,7 +355,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
 
         <article className='flex justify-between items-center w-full mt-7'>
           <section className='flex items-center'>
-            {members.map((member, index: number) => (
+            {members.map((member: User, index: number) => (
               index < 3 && <div key={index} className={`border-2 rounded-[50%] border-[#f6f6f6] p-1 ${colors[index][0]}`}>
                 <UserIcon stroke={colors[index][1]} fill={colors[index][1]} />
               </div>
@@ -327,7 +379,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     <li key={_id} className='flex flex-col h-fit border-2 bg-white  rounded-xl justify-around items-start gap-3 p-3 basis-1/3 w-full'>
       <h3 className='text-neutral-950 text-lg font-bold flex flex-row items-center'>{title}</h3>
       {habitContentJSX()}
-    </li >
+    </li>
   )
 }
 

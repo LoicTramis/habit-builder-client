@@ -7,7 +7,6 @@ import LoginIcon from "./icons/LoginIcon";
 import LogoutIcon from "./icons/LogoutIcon";
 import AddIcon from "./icons/AddIcon";
 import HomeIcon from "./icons/HomeIcon";
-import ExploreIcon from "./icons/ExploreIcon";
 import HabitIcon from "./icons/HabitIcon";
 import GroupIcon from "./icons/GroupIcon";
 import { Habit } from "../types/Habit";
@@ -77,7 +76,7 @@ const Navbar = ({ groups }) => {
     if (habits.length === 0) {
       return <li className="sub-element pl-2">You have no habit. <NavLink to="/habits">Browse</NavLink></li>
     }
-    const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username)
+    const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username || habit.members.some((member: User) => member.username === authenticateUser.user.username))
 
     return filteredHabits.map((habit: Habit) => (
       <li key={habit._id} className="sub-element flex gap-2 px-1">
