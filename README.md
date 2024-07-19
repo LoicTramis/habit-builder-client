@@ -14,7 +14,7 @@ Build good habit by setting up goal, forming group around that goal and putting 
 // - Detailed habits page
 // - CSS the login sigup page
 // - Fix end date display
-- Add join a habit -> Update a habit
+// - Add join a habit -> Update a habit
 -->
 
 ## Create a group habit

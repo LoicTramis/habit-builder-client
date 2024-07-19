@@ -19,7 +19,7 @@ import { HabitContext } from './context/HabitContextWrapper.tsx'
 
 function App() {
   const [groups, setGroups] = useState<Group[] | null>(null);
-  const { setHabits } = useContext(HabitContext)
+  const { habits, setHabits } = useContext(HabitContext)
 
   const fetchHabits = async () => {
     try {
@@ -44,7 +44,7 @@ function App() {
   useEffect(() => {
     fetchHabits();
     fetchGroups();
-  }, []);
+  }, [habits]);
 
   /**
    * Put a Route wrapper between the routes and use Outlet
