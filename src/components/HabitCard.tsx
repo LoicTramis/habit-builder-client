@@ -245,7 +245,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
 
             <article className='px-4 py-2 gap-2 text-neutral-950 font-bold'>
               <p className='flex gap-2'><GroupIcon />Members</p>
-              <ul className='flex font-normal'>
+              <ul className='flex font-normal flex-wrap'>
                 <li key={_id}>{creator.username}</li>
                 {members.map((member: User) => <li key={member._id}>, {member.username}</li>)}
               </ul>
