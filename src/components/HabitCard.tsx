@@ -13,7 +13,7 @@ import DeleteIcon from './icons/DeleteIcon'
 import EditIcon from './icons/EditIcon'
 import SaveIcon from './icons/SaveIcon'
 import CancelIcon from './icons/CancelIcon'
-import { HabitContext } from '../context/HabitContextWrapper'
+import { BuilderContext } from '../context/BuilderContextWrapper'
 import UserIcon from './icons/UserIcon'
 import JoinIcon from './icons/JoinIcon'
 import { User } from '../types/User'
@@ -43,7 +43,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   const [endDay, setEndDay] = useState(new Date(endDate))
   const [calendarMonth, setCalendarMonth] = useState(startDay.getMonth())
   const authenticateUser = useContext(AuthContext)
-  const { habits, setHabits } = useContext(HabitContext)
+  const { habits, setHabits } = useContext(BuilderContext)
   const navigate = useNavigate()
 
   /* ============================= */
@@ -116,14 +116,8 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   }
 
   const handleJoin = async () => {
-    const response = await service.patch(`/api/habits/add/${_id}`)
-    const updatedHabits = habits.map((habit: Habit) => {
-      if (habit._id === response.data._id) {
-        return response.data
-      }
-      return habit
-    })
-    setHabits(updatedHabits)
+    await service.patch(`/api/habits/add/${_id}`)
+
     setTimeout(() => {
       navigate("/habits/in")
       // TODO: and display a message somewhere too
@@ -131,14 +125,8 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   }
 
   const handleLeave = async () => {
-    const response = await service.patch(`/api/habits/remove/${_id}`)
-    const updatedHabits = habits.map((habit: Habit) => {
-      if (habit._id === response.data._id) {
-        return response.data
-      }
-      return habit
-    })
-    setHabits(updatedHabits)
+    await service.patch(`/api/habits/remove/${_id}`)
+
     setTimeout(() => {
       navigate("/habits/in")
       // TODO: and display a message somewhere too

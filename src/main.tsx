@@ -2,18 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './main.css'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import AuthContextWrapper from './context/AuthContextWrapper.tsx'
-import HabitContextWrapper from './context/HabitContextWrapper.tsx'
+import BuilderContextWrapper from './context/BuilderContextWrapper.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <AuthContextWrapper>
-        <HabitContextWrapper>
+        <BuilderContextWrapper>
           <App />
-        </HabitContextWrapper>
+        </BuilderContextWrapper>
       </AuthContextWrapper>
-    </BrowserRouter>
-  </React.StrictMode>,
+    </Router>
+  </React.StrictMode>
 )

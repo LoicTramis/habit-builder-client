@@ -3,10 +3,13 @@ import { Habit } from '../types/Habit'
 import service from '../service/api'
 import HabitList from '../components/HabitList'
 import Main from '../components/Main'
-import { HabitContext } from '../context/HabitContextWrapper'
+import { BuilderContext } from '../context/BuilderContextWrapper'
+import { AuthContext } from '../context/AuthContextWrapper'
 
 const HabitUserPage = () => {
-  const { habits, setHabits } = useContext(HabitContext)
+  const { habits, setHabits } = useContext(BuilderContext)
+  const authenticateUser = useContext(AuthContext)
+
   const fetchHabits = async () => {
     try {
       const response = await service.get("/api/habits/in")

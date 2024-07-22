@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContextWrapper'
 import service from '../service/api'
 import Main from '../components/Main'
 import { Habit } from '../types/Habit'
+import { BuilderContext } from '../context/BuilderContextWrapper'
 
-const HabitCreatePage = ({ setHabits }) => {
+const HabitCreatePage = () => {
   const [habitForm, setHabitForm] = useState({
     title: "",
     description: "",
@@ -15,6 +16,7 @@ const HabitCreatePage = ({ setHabits }) => {
     difficulty: "-1",
   })
   const authenticateUser = useContext(AuthContext)
+  const { setHabits } = useContext(BuilderContext)
   const navigate = useNavigate()
 
   const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

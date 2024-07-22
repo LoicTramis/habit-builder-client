@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
@@ -12,11 +12,11 @@ import GroupIcon from "./icons/GroupIcon";
 import { Habit } from "../types/Habit";
 import { Group } from "../types/Group";
 import { User } from "../types/User";
-import { HabitContext } from "../context/HabitContextWrapper";
+import { BuilderContext } from "../context/BuilderContextWrapper";
 
-const Navbar = ({ groups }) => {
-  const { habits } = useContext(HabitContext)
+const Navbar = () => {
   const [showPage, setShowPage] = useState(false);
+  const { habits, groups } = useContext(BuilderContext)
   const authenticateUser = useContext(AuthContext);
   const navigate = useNavigate();
   const modal = useRef(null);
@@ -72,12 +72,14 @@ const Navbar = ({ groups }) => {
   };
 
   const habitsJSX = () => {
-    if (!habits) return
-    if (habits.length === 0) {
-      return <li className="sub-element pl-2">You have no habit. <NavLink to="/habits">Browse</NavLink></li>
-    }
+    console.dir(habits)
+    if (!habits) return <li className="sub-element pl-2"><em className="italic">There is no habit.</em></li>
+
     const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username || habit.members.some((member: User) => member.username === authenticateUser.user.username))
 
+    if (filteredHabits.length === 0) {
+      return <li className="sub-element pl-2"><em className="italic">You have no habit.</em></li>
+    }
     return filteredHabits.map((habit: Habit) => (
       <li key={habit._id} className="sub-element flex gap-2 px-1">
         <NavLink to={`/habits/${habit._id}`} className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
@@ -91,7 +93,7 @@ const Navbar = ({ groups }) => {
   const groupsJSX = () => {
     if (!groups) return
     if (groups.length === 0) {
-      return <li className="sub-element pl-2">You have no group. <NavLink to="/groups">Browse</NavLink></li>
+      return <li className="sub-element pl-2"><em className="italic">You have no group.</em></li>
     }
     const filteredGroups = groups.filter((group: Group) => group.admin.username === authenticateUser.user.username || group.members.some((member: User) => member.username === authenticateUser.user.username))
     return filteredGroups.map((group: Group) => (
@@ -102,7 +104,6 @@ const Navbar = ({ groups }) => {
         </NavLink>
       </li>))
   }
-
 
   return (
     <nav>
