@@ -29,8 +29,8 @@ const HabitUserPage = () => {
 
   const today = new Date();
 
-  const upcomingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) < today);
-  const ongoingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) > today && new Date(habit.endDate) > today);
+  const upcomingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) > today);
+  const ongoingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) < today && new Date(habit.endDate) > today);
   const doneHabits = habits.filter((habit: Habit) => new Date(habit.endDate) < today)
 
   return (

@@ -16,7 +16,7 @@ import { BuilderContext } from "../context/BuilderContextWrapper";
 
 const Navbar = () => {
   const [showPage, setShowPage] = useState(false);
-  const { habits, groups } = useContext(BuilderContext)
+  const { habits, setHabits, groups, setGroups } = useContext(BuilderContext)
   const authenticateUser = useContext(AuthContext);
   const navigate = useNavigate();
   const modal = useRef(null);

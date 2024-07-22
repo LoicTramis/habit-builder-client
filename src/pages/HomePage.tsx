@@ -10,30 +10,7 @@ import service from "../service/api";
 const HomePage = () => {
   const { habits, setHabits, groups, setGroups } = useContext(BuilderContext)
 
-  const fetchHabits = async () => {
-    try {
-      const response = await service.get("/api/habits");
-      setHabits(response.data);
-    } catch (error) {
-      // show some error on the screen
-      console.log(error);
-    }
-  };
 
-  const fetchGroups = async () => {
-    try {
-      const response = await service.get("/api/groups");
-      setGroups(response.data);
-    } catch (error) {
-      // show some error on the screen
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchHabits();
-    fetchGroups();
-  }, []);
 
   if (!habits || !groups) {
     return <Main title=""><p>Loading</p></Main>
