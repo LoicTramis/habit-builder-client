@@ -8,9 +8,7 @@ import { useContext, useEffect } from "react";
 import service from "../service/api";
 
 const HomePage = () => {
-  const { habits, setHabits, groups, setGroups } = useContext(BuilderContext)
-
-
+  const { habits, groups } = useContext(BuilderContext)
 
   if (!habits || !groups) {
     return <Main title=""><p>Loading</p></Main>

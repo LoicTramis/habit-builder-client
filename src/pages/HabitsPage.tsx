@@ -28,16 +28,16 @@ const HabitsPage = () => {
     return <Main title=""><p>Loading</p></Main>;
   }
 
-  const upcomingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) < today);
-  const ongoingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) > today && new Date(habit.endDate) < today);
-  const doneHabits = habits.filter((habit: Habit) => new Date(habit.endDate) > today);
+  const upcomingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) > today);
+  const ongoingHabits = habits.filter((habit: Habit) => new Date(habit.startDate) < today && new Date(habit.endDate) > today);
+  const doneHabits = habits.filter((habit: Habit) => new Date(habit.endDate) < today);
 
   return (
     <Main title="Explore habits">
       <article className="grid grid-cols-3">
         <HabitList habits={upcomingHabits} title="Upcoming" />
         <HabitList habits={ongoingHabits} title="Ongoing" />
-        <HabitList habits={doneHabits} title="Done" />
+        <HabitList habits={doneHabits} title="Expired" />
       </article>
     </Main>
   );

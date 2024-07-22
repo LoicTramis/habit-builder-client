@@ -1,29 +1,29 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContextWrapper";
+import { BuilderContext } from "../context/BuilderContextWrapper";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
-import { AuthContext } from "../context/AuthContextWrapper";
+import { Habit } from "../types/Habit";
+import { Group } from "../types/Group";
+import { User } from "../types/User";
 import LoginIcon from "./icons/LoginIcon";
 import LogoutIcon from "./icons/LogoutIcon";
 import AddIcon from "./icons/AddIcon";
 import HomeIcon from "./icons/HomeIcon";
 import HabitIcon from "./icons/HabitIcon";
 import GroupIcon from "./icons/GroupIcon";
-import { Habit } from "../types/Habit";
-import { Group } from "../types/Group";
-import { User } from "../types/User";
-import { BuilderContext } from "../context/BuilderContextWrapper";
 
 const Navbar = () => {
   const [showPage, setShowPage] = useState(false);
-  const { habits, setHabits, groups, setGroups } = useContext(BuilderContext)
+  const { habits, groups } = useContext(BuilderContext)
   const authenticateUser = useContext(AuthContext);
   const navigate = useNavigate();
   const modal = useRef(null);
 
-  // =========================== */
-  // ========= HANDLES ========= */
-  // =========================== */
+  ////-------------------------////
+  // *         HANDLES         * //
+  ////-------------------------////
   const handleCreateHabit = () => {
     if (!authenticateUser.isLoggedIn) {
       // display message for log in
@@ -31,7 +31,6 @@ const Navbar = () => {
     }
     navigate("/createHabit");
   };
-
   const handleCreateGroup = () => {
     if (!authenticateUser.isLoggedIn) {
       // display message for log in
@@ -39,23 +38,20 @@ const Navbar = () => {
     }
     navigate("/createGroup");
   };
-
   const handleShowModal = (e: React.MouseEvent) => {
     e.preventDefault();
     modal.current.showModal();
   };
-
   const handleSwitchModal = () => {
     setShowPage(!showPage);
   };
-
   const handleDisconnet = () => {
     authenticateUser.disconnect();
   };
 
-  // ======================= */
-  // ========= JSX ========= */
-  // ======================= */
+  ////---------------------////
+  // *         JSX         * //
+  ////---------------------////
   const authUserJSX = () => {
     return authenticateUser.isLoggedIn ? (
       <>
@@ -70,9 +66,7 @@ const Navbar = () => {
       </button>
     );
   };
-
   const habitsJSX = () => {
-    console.dir(habits)
     if (!habits) return <li className="sub-element pl-2"><em className="italic">There is no habit.</em></li>
 
     const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username || habit.members.some((member: User) => member.username === authenticateUser.user.username))
@@ -88,8 +82,7 @@ const Navbar = () => {
         </NavLink>
       </li>
     ))
-  }
-
+  };
   const groupsJSX = () => {
     if (!groups) return
     if (groups.length === 0) {
@@ -103,7 +96,7 @@ const Navbar = () => {
           <GroupIcon />{group.name}
         </NavLink>
       </li>))
-  }
+  };
 
   return (
     <nav>
@@ -148,8 +141,6 @@ const Navbar = () => {
         </li>
       </ul>
 
-
-      {/* Auth user only */}
       {
         authenticateUser.isLoggedIn &&
         <>

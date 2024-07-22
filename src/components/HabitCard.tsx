@@ -46,9 +46,9 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   const { habits, setHabits } = useContext(BuilderContext)
   const navigate = useNavigate()
 
-  /* ============================= */
-  /* ========== HANDLES ========== */
-  /* ============================= */
+  ////-------------------------- ////
+  // *          HANDLES          * //
+  ////-------------------------- ////
   const handleDelete = async () => {
     // TODO: put a loader somewhere
     const deletedHabit = await service.delete(`/api/habits/${_id}`)
@@ -61,15 +61,12 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
       // TODO: and display a message somewhere too
     }, 300)
   }
-
   const handleEdit = async () => {
     setEditMode(true)
   }
-
   const handleCancel = () => {
     setEditMode(false)
   }
-
   const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const name = (event.target as HTMLInputElement).name
     const value = (event.target as HTMLInputElement).value
@@ -79,7 +76,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
       [name]: value
     }))
   }
-
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
@@ -99,12 +95,10 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
       setEditMode(false)
     }
   }
-
   const handleView = (event) => {
     event.preventDefault()
     navigate(`/habits/${_id}`)
   }
-
   const handleSideMonth = (side: string) => {
     if (side === "previous") {
       setCalendarMonth(prev => prev - 1)
@@ -114,7 +108,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
       // setStartDay(prev => new Date(prev.getMonth() + 1))
     }
   }
-
   const handleJoin = async () => {
     await service.patch(`/api/habits/add/${_id}`)
 
@@ -123,7 +116,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
       // TODO: and display a message somewhere too
     }, 300)
   }
-
   const handleLeave = async () => {
     await service.patch(`/api/habits/remove/${_id}`)
 
@@ -133,6 +125,9 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     }, 300)
   }
 
+  ////-----------------------////
+  // *          JSX          * //
+  ////-----------------------////
   const habitContentJSX = () => {
     if (detailed) {
       if (editMode) {
@@ -362,9 +357,9 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
       // members and groups
     }
   }
-  // Try a grid layout to align content on the left
+
   return (
-    <li key={_id} className='flex flex-col h-fit border-2 bg-white  rounded-xl justify-around items-start gap-3 p-3 basis-1/3 w-full'>
+    <li key={_id} className='flex flex-col h-fit border-2 bg-white rounded-xl justify-around items-start gap-3 p-3 basis-1/3 w-full'>
       <h3 className='text-neutral-950 text-lg font-bold flex flex-row items-center'>{title}</h3>
       {habitContentJSX()}
     </li>
