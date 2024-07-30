@@ -12,9 +12,8 @@ Build good habit by setting up goal, forming group around that goal and putting 
 TODO - Fix: difficulty & frequency tag on newly created habit
 TODO - Fix: end date after created habit on my habits page
 TODO - Fix: edit form empty
-TODO - Fix: edit Display new info on save instead of on reload
 TODO - Fix: display correct start date after edit
-TODO - Fix: display date when swapping habits
+TODO - Fix: default end date when creating
 TODO - Add: button on start and end date that show start end date on calendar
 -->
 

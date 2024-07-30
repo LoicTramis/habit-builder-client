@@ -20,6 +20,8 @@ import { User } from '../types/User'
 import getCalendar from '../utils/calendar'
 import ChevronLeft from './icons/ChevronLeft'
 import ChevronRight from './icons/ChevronRight'
+import HabitForm from './HabitForm'
+import HabitContent from './HabitContent'
 
 const colors = [
   ["text-blue-400 bg-blue-300", "#60a5fa"],
@@ -36,13 +38,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     description: "",
     difficulty: "-1",
     frequency: "",
-    startDate: "",
-    endDate: ""
   })
-  const [startDay, setStartDay] = useState(new Date(startDate))
-  const [endDay, setEndDay] = useState(new Date(endDate))
-  const [calendarMonth, setCalendarMonth] = useState(startDay.getMonth())
-  const authenticateUser = useContext(AuthContext)
   const { habits, setHabits } = useContext(BuilderContext)
   const navigate = useNavigate()
 
@@ -50,7 +46,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   // *          HANDLES          * //
   ////-------------------------- ////
   const handleDelete = async () => {
-    // TODO: put a loader somewhere
     const deletedHabit = await service.delete(`/api/habits/${_id}`)
     console.log(deletedHabit)
     const newHabits = habits.filter((habit: Habit) => habit._id !== _id)
@@ -94,15 +89,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     event.preventDefault()
     navigate(`/habits/${_id}`)
   }
-  const handleSideMonth = (side: string) => {
-    if (side === "previous") {
-      setCalendarMonth(prev => prev - 1)
-      // setStartDay(prev => new Date(prev.getMonth() - 1))
-    } else {
-      setCalendarMonth(prev => prev + 1)
-      // setStartDay(prev => new Date(prev.getMonth() + 1))
-    }
-  }
   const handleJoin = async () => {
     await service.patch(`/api/habits/add/${_id}`)
 
@@ -126,192 +112,33 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   const habitContentJSX = () => {
     if (detailed) {
       if (editMode) {
-        return <>
-          <form onSubmit={handleSubmitForm}>
-            <article className='grid grid-cols-3 px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2'><DifficultyIcon />Difficulty</p>
-              <select
-                name="difficulty"
-                id="difficulty"
-                value={habitForm.difficulty}
-                onChange={handleChange}
-                className='text-[#060606] col-span-2'>
-                <option value="-1">-- Select a difficulty --</option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-                <option value="Challenger">Challenger</option>
-                <option value="Goggins">Goggins</option>
-              </select>
-            </article>
-            <article className='grid grid-cols-3 px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2'><FrequencyIcon />Frequency</p>
-              <input
-                type="text"
-                name="frequency"
-                id="frequency"
-                value={habitForm.frequency}
-                onChange={handleChange}
-                className='text-[#060606]' />
-            </article>
-            <article className='grid grid-cols-3 px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2'><DateIcon />Start</p>
-              <input
-                type='date'
-                name="startDate"
-                id="startDate"
-                value={habitForm.startDate}
-                onChange={handleChange}
-                className='col-span-2 text-[#060606]' />
-            </article>
-            <article className='grid grid-cols-3 px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2'><DateIcon />End</p>
-              <input
-                type='date'
-                name="endDate"
-                id="endDate"
-                value={habitForm.endDate}
-                onChange={handleChange}
-                className='col-span-2 text-[#060606]' />
-            </article>
-            <article>
-              <p className='px-4 pt-2 flex justify-start items-center gap-2 text-[#707070]'><DescriptionIcon />Description</p>
-              <textarea
-                name="description"
-                id="description"
-                value={habitForm.description}
-                onChange={handleChange}
-                rows={5}
-                className='px-4 py-2 h-36 w-full'></textarea>
-            </article>
-            <article className='grid grid-cols-3 px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2'><GroupIcon />Members</p>
-              <p className='text-[#060606]'>{members.length} participants</p>
-            </article>
-            <article className='flex justify-end px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2'>Made by</p>
-              <p className='text-[#060606]'>{creator.username}</p>
-            </article>
-            {authenticateUser.isLoggedIn && authenticateUser.user._id === creator._id &&
-              <article className='flex justify-end'>
-                <button type="reset" onClick={handleCancel} className='flex items-start gap-1 m-3 p-2 font-bold text-zinc-500 opacity-70 hover:opacity-100'><CancelIcon size={"size-5"} />Cancel</button>
-                <button type='submit' className='flex items-start gap-1 m-3 p-2 font-bold text-emerald-500 opacity-70 hover:opacity-100'><SaveIcon size={"size-5"} />Save</button>
-              </article>
-            }
-          </form>
-        </>
+        return <HabitForm
+          habitForm={habitForm}
+          members={members}
+          creator={creator}
+          startDate={startDate}
+          endDate={endDate}
+          monthNames={monthNames}
+          handleSubmitForm={handleSubmitForm}
+          handleChange={handleChange}
+          handleCancel={handleCancel}
+        />
       }
-      return <>
-        <article className='flex justify-between w-full'>
-          {/* DISPLAY OF 
-            - Description
-            - Members */}
-          <section className='flex flex-col basis-1/3'>
-            <article>
-              <p className='px-4 pt-2 flex justify-start items-center gap-2 text-neutral-950 font-bold'><DescriptionIcon />Description</p>
-              <p className='px-4 py-2 w-[90%] h-36'>{description}</p>
-            </article>
-
-            <article className=' flex px-4 py-2 gap-2'>
-              {difficulty === "Easy" && <p className='px-2 py-1 bg-emerald-200 text-emerald-800 rounded-md'>{difficulty}</p>}
-              {difficulty === "Medium" && <p className='px-2 py-1 bg-orange-200 text-orange-800 rounded-md'>{difficulty}</p>}
-              {difficulty === "Hard" && <p className='px-2 py-1 bg-red-200 text-red-800 rounded-md'>{difficulty}</p>}
-              {difficulty === "Challenger" && <p className='px-2 py-1 bg-purple-200 text-purple-800 rounded-md'>{difficulty}</p>}
-              {difficulty === "Goggins" && <p className='px-2 py-1 bg-neutral-600 text-neutral-200 rounded-md'>{difficulty}</p>}
-              <p className='px-2 py-1 bg-neutral-200 text-neutral-800 rounded-md'>{frequency}</p>
-            </article>
-
-            <article className='px-4 py-2 gap-2 text-neutral-950 font-bold'>
-              <p className='flex gap-2'><GroupIcon />Members</p>
-              <ul className='flex font-normal flex-wrap'>
-                <li key={_id}>{creator.username}</li>
-                {members.map((member: User) => <li key={member._id}>, {member.username}</li>)}
-              </ul>
-            </article>
-
-          </section>
-          {/* DISPLAY OF 
-            - Month
-            - Calendar*/}
-          <section className='flex flex-col basis-1/3'>
-            <article className='flex flex-col gap-3 px-4 py-2  text-[#707070]'>
-              <section className='flex flex-row justify-around items-center font-bold text-lg text-center text-neutral-950'>
-                <button onClick={() => handleSideMonth("previous")} className='p-1 hover:bg-neutral-100 rounded'><ChevronLeft /></button>
-                <p>{monthNames[calendarMonth]} {startDay.getFullYear()}</p>
-                <button onClick={() => handleSideMonth("next")} className='p-1 hover:bg-neutral-100 rounded'><ChevronRight /></button>
-              </section>
-            </article>
-
-            <article>
-              <ul className='col-span-3'>
-                {getCalendar(startDay.getFullYear(), calendarMonth).map((line: object[], index: number) => (
-                  <li key={index} className='flex justify-center '>
-                    <ul className='flex'>
-                      {line.map((day: Date) => {
-                        // CSS for day of the month and side months
-                        let color = ""
-                        if (day.getMonth() === calendarMonth) {
-                          color = "text-neutral-950"
-                        } else {
-                          color = "text-neutral-300"
-                        }
-                        // CSS for start day
-                        if (day.getDate() === startDay.getDate() && day.getMonth() === startDay.getMonth()) {
-                          color = " bg-indigo-200 text-indigo-800 border-indigo-300"
-                        }
-                        // CSS for end day
-                        if (day.getDate() === endDay.getDate() && day.getMonth() === endDay.getMonth()) {
-                          color = " bg-pink-200 text-pink-800 border-pink-300"
-                        }
-
-                        return <li key={day.getDate()} className={`border rounded w-12 h-12 p-4 m-1  ${color} flex justify-center items-center`}>{day.getDate()}</li>
-                      })}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </section>
-          <section className="flex flex-col basis-1/3 justify-between">
-            <article className='flex items-center px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2 px-2 py-1 w-24 border rounded bg-indigo-200 text-indigo-800 border-indigo-300'><DateIcon />Start</p>
-              <p className='col-span-2 text-[#060606]'>{formatDate(startDate)}</p>
-            </article>
-
-            <article className='flex items-center px-4 py-2 gap-2 text-[#707070]'>
-              <p className='flex gap-2 px-2 py-1 w-24 border rounded bg-pink-200 text-pink-800 border-pink-300'><DateIcon />End</p>
-              <p className='col-span-2 text-[#060606]'>{formatDate(endDate)}</p>
-            </article>
-          </section>
-        </article>
-        <section className='flex flex-row'>
-          {authenticateUser.isLoggedIn
-            && (members.some((member: User) => member._id === authenticateUser.user._id) || creator._id === authenticateUser.user._id)
-            &&
-            <article className='flex justify-between items-center'>
-              <button id='join' onClick={handleLeave} className='flex gap-1 h-fit bg-red-50 border border-red-500 text-red-600 rounded mr-3 px-3 py-1'>
-                <p className='font-bold'>Leave habit</p>
-              </button>
-            </article>
-          }
-          {
-            authenticateUser.isLoggedIn
-            && (!members.find((member: User) => member._id === authenticateUser.user._id) && creator._id !== authenticateUser.user._id)
-            &&
-            <article className='flex justify-between'>
-              <button id='join' onClick={handleJoin} className='flex gap-1 bg-sky-50 border border-sky-500 rounded mr-3 px-3 py-1'>
-                <p className='font-bold text-sky-600'>Join</p>
-              </button>
-            </article>
-          }
-          {authenticateUser.isLoggedIn && authenticateUser.user._id === creator._id &&
-            <article className='flex justify-between '>
-              <button onClick={handleDelete} className='flex items-start gap-1 m-3 p-2 font-bold text-red-500 opacity-70 hover:opacity-100'><DeleteIcon size={"size-5"} />Delete</button>
-              <button onClick={handleEdit} className='flex items-start gap-1 m-3 p-2 font-bold text-blue-500 opacity-70 hover:opacity-100'><EditIcon size={"size-5"} />Edit</button>
-            </article>
-          }
-        </section>
-      </>
+      return <HabitContent
+        _id={_id}
+        description={description}
+        difficulty={difficulty}
+        frequency={frequency}
+        members={members}
+        creator={creator}
+        startDate={startDate}
+        endDate={endDate}
+        monthNames={monthNames}
+        handleJoin={handleJoin}
+        handleLeave={handleLeave}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
     } else {
       return <>
         <article className='flex flex-row gap-3'>
