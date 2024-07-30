@@ -35,7 +35,7 @@ const HabitUserPage = () => {
 
   return (
     <Main title="My Habits">
-      <section>
+      <section className="grid grid-cols-3">
         <HabitList habits={upcomingHabits} title="Upcoming" />
         <HabitList habits={ongoingHabits} title="Ongoing" />
         <HabitList habits={doneHabits} title="Done" />

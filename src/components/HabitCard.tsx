@@ -207,11 +207,11 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
         </>
       }
       return <>
-        <section className='flex justify-between w-full'>
+        <article className='flex justify-between w-full'>
           {/* DISPLAY OF 
             - Description
             - Members */}
-          <div className='flex flex-col basis-1/3'>
+          <section className='flex flex-col basis-1/3'>
             <article>
               <p className='px-4 pt-2 flex justify-start items-center gap-2 text-neutral-950 font-bold'><DescriptionIcon />Description</p>
               <p className='px-4 py-2 w-[90%] h-36'>{description}</p>
@@ -222,7 +222,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
               {difficulty === "Medium" && <p className='px-2 py-1 bg-orange-200 text-orange-800 rounded-md'>{difficulty}</p>}
               {difficulty === "Hard" && <p className='px-2 py-1 bg-red-200 text-red-800 rounded-md'>{difficulty}</p>}
               {difficulty === "Challenger" && <p className='px-2 py-1 bg-purple-200 text-purple-800 rounded-md'>{difficulty}</p>}
-              {difficulty === "Goggins" && <p className='px-2 py-1 bg-neutral-200 text-neutral-800 rounded-md'>{difficulty}</p>}
+              {difficulty === "Goggins" && <p className='px-2 py-1 bg-neutral-600 text-neutral-200 rounded-md'>{difficulty}</p>}
               <p className='px-2 py-1 bg-neutral-200 text-neutral-800 rounded-md'>{frequency}</p>
             </article>
 
@@ -234,11 +234,11 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
               </ul>
             </article>
 
-          </div>
+          </section>
           {/* DISPLAY OF 
             - Month
             - Calendar*/}
-          <div className='flex flex-col basis-1/3'>
+          <section className='flex flex-col basis-1/3'>
             <article className='flex flex-col gap-3 px-4 py-2  text-[#707070]'>
               <section className='flex flex-row justify-around items-center font-bold text-lg text-center text-neutral-950'>
                 <button onClick={() => handleSideMonth("previous")} className='p-1 hover:bg-neutral-100 rounded'><ChevronLeft /></button>
@@ -276,8 +276,8 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
                 ))}
               </ul>
             </article>
-          </div>
-          <div className="flex flex-col basis-1/3 justify-between">
+          </section>
+          <section className="flex flex-col basis-1/3 justify-between">
             <article className='flex items-center px-4 py-2 gap-2 text-[#707070]'>
               <p className='flex gap-2 px-2 py-1 w-24 border rounded bg-indigo-200 text-indigo-800 border-indigo-300'><DateIcon />Start</p>
               <p className='col-span-2 text-[#060606]'>{formatDate(startDate)}</p>
@@ -287,8 +287,8 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
               <p className='flex gap-2 px-2 py-1 w-24 border rounded bg-pink-200 text-pink-800 border-pink-300'><DateIcon />End</p>
               <p className='col-span-2 text-[#060606]'>{formatDate(endDate)}</p>
             </article>
-          </div>
-        </section>
+          </section>
+        </article>
         <section className='flex flex-row'>
           {authenticateUser.isLoggedIn
             && (members.some((member: User) => member._id === authenticateUser.user._id) || creator._id === authenticateUser.user._id)
@@ -301,7 +301,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
           }
           {
             authenticateUser.isLoggedIn
-            && (members.some((member: User) => member._id !== authenticateUser.user._id) || creator._id !== authenticateUser.user._id)
+            && (!members.some((member: User) => member._id === authenticateUser.user._id) && creator._id !== authenticateUser.user._id)
             &&
             <article className='flex justify-between'>
               <button id='join' onClick={handleJoin} className='flex gap-1 bg-sky-50 border border-sky-500 rounded mr-3 px-3 py-1'>
@@ -318,7 +318,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
         </section>
       </>
     } else {
-      // date and difficulty
       return <>
         <article className='flex flex-row gap-3'>
           <p className='flex items-end gap-2 px-2 py-1 bg-neutral-100 rounded'>

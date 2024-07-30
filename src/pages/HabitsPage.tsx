@@ -34,11 +34,11 @@ const HabitsPage = () => {
 
   return (
     <Main title="Explore habits">
-      <article className="grid grid-cols-3">
+      <section className="grid grid-cols-3">
         <HabitList habits={upcomingHabits} title="Upcoming" />
         <HabitList habits={ongoingHabits} title="Ongoing" />
         <HabitList habits={doneHabits} title="Expired" />
-      </article>
+      </section>
     </Main>
   );
 };
