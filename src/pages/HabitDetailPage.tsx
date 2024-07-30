@@ -1,18 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Main from '../components/Main'
 import { Habit } from '../types/Habit'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import service from '../service/api'
 import HabitCard from '../components/HabitCard'
+import { BuilderContext } from '../context/BuilderContextWrapper'
 
 const HabitDetailPage = () => {
   const [habit, setHabit] = useState<Habit | null>(null)
+  const { habits } = useContext(BuilderContext)
   const { habitId } = useParams()
+  const navigate = useNavigate()
 
   const fetchHabit = async () => {
     try {
       const response = await service.get(`/api/habits/${habitId}`)
+      if (response.data.length === 0) {
+        navigate("/habits/in")
+        return
+      }
       setHabit(response.data)
     } catch (error) {
       console.log(error)
@@ -21,7 +28,7 @@ const HabitDetailPage = () => {
 
   useEffect(() => {
     fetchHabit()
-  }, [habitId])
+  }, [habits, habitId])
 
   if (!habit) {
     return <Main title="Habit Detail">

@@ -55,11 +55,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     console.log(deletedHabit)
     const newHabits = habits.filter((habit: Habit) => habit._id !== _id)
     setHabits(newHabits)
-
-    setTimeout(() => {
-      navigate("/habits/in")
-      // TODO: and display a message somewhere too
-    }, 300)
   }
   const handleEdit = async () => {
     setEditMode(true)
@@ -301,7 +296,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
           }
           {
             authenticateUser.isLoggedIn
-            && (!members.some((member: User) => member._id === authenticateUser.user._id) && creator._id !== authenticateUser.user._id)
+            && (!members.find((member: User) => member._id === authenticateUser.user._id) && creator._id !== authenticateUser.user._id)
             &&
             <article className='flex justify-between'>
               <button id='join' onClick={handleJoin} className='flex gap-1 bg-sky-50 border border-sky-500 rounded mr-3 px-3 py-1'>
@@ -353,7 +348,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
           </section>
         </article>
       </>
-      // members and groups
     }
   }
 
