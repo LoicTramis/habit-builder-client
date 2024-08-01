@@ -31,11 +31,11 @@ const HabitForm = ({ habitForm, members, creator, startDate, endDate, monthNames
   return (
     <>
       <form onSubmit={handleSubmitForm} className='flex justify-between w-full'>
-        {/* //// --------------------------//// */}
+        {/* ////                           //// */}
         {/* // *        Description        * // */}
         {/* // *   Difficulty & Frenquency * // */}
         {/* // *          Members          * // */}
-        {/* //// --------------------------//// */}
+        {/* ////                           //// */}
         <section className='flex flex-col basis-1/3'>
           <article>
             <p className='px-4 pt-2 flex justify-start items-center gap-2 text-neutral-950 font-bold'><DescriptionIcon />Description</p>
@@ -81,10 +81,10 @@ const HabitForm = ({ habitForm, members, creator, startDate, endDate, monthNames
             <p className='text-[#060606]'>{members.length} participants</p>
           </article>
         </section>
-        {/* //// --------------------------//// */}
+        {/* ////                           //// */}
         {/* // *        Month & Year       * // */}
         {/* // *          Calendar         * // */}
-        {/* //// --------------------------//// */}
+        {/* ////                           //// */}
         <section className='flex flex-col basis-1/3'>
           <article className='flex flex-col gap-3 px-4 py-2  text-[#707070]'>
             <section className='flex flex-row justify-around items-center font-bold text-lg text-center text-neutral-950'>
@@ -126,9 +126,9 @@ const HabitForm = ({ habitForm, members, creator, startDate, endDate, monthNames
             </ul>
           </article>
         </section>
-        {/* //// --------------------------//// */}
+        {/* ////                           //// */}
         {/* // *      Start & End Date     * // */}
-        {/* //// --------------------------//// */}
+        {/* ////                           //// */}
         <section className="flex flex-col basis-1/3 justify-between">
           <article className='flex items-center px-4 py-2 gap-2 text-[#707070]'>
             <p className='flex gap-2 px-2 py-1 w-24 border rounded bg-indigo-200 text-indigo-800 border-indigo-300'><DateIcon />Start</p>

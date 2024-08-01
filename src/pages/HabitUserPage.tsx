@@ -1,14 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
+import { BuilderContext } from '../context/BuilderContextWrapper'
 import { Habit } from '../types/Habit'
 import service from '../service/api'
-import HabitList from '../components/HabitList'
 import Main from '../components/Main'
-import { BuilderContext } from '../context/BuilderContextWrapper'
-import { AuthContext } from '../context/AuthContextWrapper'
+import HabitList from '../components/HabitList'
 
 const HabitUserPage = () => {
   const { habits, setHabits } = useContext(BuilderContext)
-  const authenticateUser = useContext(AuthContext)
 
   const fetchHabits = async () => {
     try {

@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContextWrapper";
 import { BuilderContext } from "../context/BuilderContextWrapper";
-import LoginPage from "../pages/LoginPage";
-import SignupPage from "../pages/SignupPage";
 import { Habit } from "../types/Habit";
 import { Group } from "../types/Group";
 import { User } from "../types/User";
@@ -13,6 +11,7 @@ import AddIcon from "./icons/AddIcon";
 import HomeIcon from "./icons/HomeIcon";
 import HabitIcon from "./icons/HabitIcon";
 import GroupIcon from "./icons/GroupIcon";
+import Modal from "./Modal";
 
 const Navbar = () => {
   const [showPage, setShowPage] = useState(false);
@@ -21,9 +20,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const modal = useRef(null);
 
-  ////-------------------------////
+  ////                         ////
   // *         HANDLES         * //
-  ////-------------------------////
+  ////                         ////
   const handleCreateHabit = () => {
     if (!authenticateUser.isLoggedIn) {
       // display message for log in
@@ -42,16 +41,13 @@ const Navbar = () => {
     e.preventDefault();
     modal.current.showModal();
   };
-  const handleSwitchModal = () => {
-    setShowPage(!showPage);
-  };
   const handleDisconnet = () => {
     authenticateUser.disconnect();
   };
 
-  ////---------------------////
+  ////                     ////
   // *         JSX         * //
-  ////---------------------////
+  ////                     ////
   const authUserJSX = () => {
     return authenticateUser.isLoggedIn ? (
       <>
@@ -100,23 +96,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <dialog ref={modal} className="rounded-lg w-1/3 p-5">
-        {showPage ? (
-          <>
-            <SignupPage modal={modal} showPage={showPage} setShowPage={setShowPage} />
-            <p className="mt-5 flex gap-4 justify-end">
-              Already have an account? <button onClick={handleSwitchModal} className="text-blue-500 underline">Login.</button>
-            </p>
-          </>
-        ) : (
-          <>
-            <LoginPage modal={modal} />
-            <p className="mt-5 flex gap-4 justify-end">
-              No account? <button onClick={handleSwitchModal} className="text-blue-500 underline">Sign up!</button>
-            </p>
-          </>
-        )}
-      </dialog>
+      <Modal showPage={showPage} setShowPage={setShowPage} />
 
       <ul className="element">
         <li className="sub-title w-full flex justify-between">{authUserJSX()}</li>
