@@ -157,7 +157,7 @@ const HabitForm = ({ habitForm, members, creator, startDate, endDate, monthNames
           <button type="reset" onClick={handleCancel} className='flex items-start gap-1 m-3 p-2 font-bold text-zinc-500 opacity-70 hover:opacity-100'>
             <CancelIcon size={"size-5"} />Cancel
           </button>
-          <button type='submit' className='flex items-start gap-1 m-3 p-2 font-bold text-emerald-500 opacity-70 hover:opacity-100'>
+          <button type='submit' onClick={handleSubmitForm} className='flex items-start gap-1 m-3 p-2 font-bold text-emerald-500 opacity-70 hover:opacity-100'>
             <SaveIcon size={"size-5"} />Save
           </button>
         </article>

@@ -30,7 +30,6 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     startDate: "",
     endDate: ""
   })
-  console.info(habitForm)
   const { habits, setHabits } = useContext(BuilderContext)
   const navigate = useNavigate()
 
@@ -61,6 +60,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
+      console.log(habitForm)
       const response = await service.put(`/api/habits/${_id}`, habitForm)
       const updatedHabits = habits.map((habit: Habit) => {
         if (habit._id === response.data._id) {
