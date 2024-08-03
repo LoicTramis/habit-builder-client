@@ -13,16 +13,15 @@ Build good habit by setting up goal, forming group around that goal and putting 
 <!--
 TODO - Fix: difficulty & frequency tag on newly created habit
 TODO - Fix: edit form empty
-TODO - Fix: display correct start date after edit
-TODO - Add: button on start and end date that show start end date on calendar
+TODO - Add: button on start and end date tag that go to the start / end date on calendar
 TODO - Add: Close icon on login / sign up page
 -->
 
 ## Create a group habit
 
-- set up a goal
-- set up a deadline
-- set up a frequency
+- set up a goal (multiple habits)
+- set up a deadline (for all habits)
+- set up a frequency (for each habits)
 - change title
 - change description
 
@@ -42,3 +41,10 @@ You can participate in a habit
 - Front-end hosted with [Netlify](https://habit-builder.netlify.app)
 - Back-end hosted with [Render](https://habit-builder-server.onrender.com)
 - Database hosted with [MongoDB Atlas](https://cloud.mongodb.com/)
+
+## Configuration
+
+### Formatting
+
+- [Prettier](https://prettier.io/docs/en/options)
+- [Prettier for TailwindCss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)

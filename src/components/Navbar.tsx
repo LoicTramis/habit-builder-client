@@ -15,7 +15,7 @@ import Modal from "./Modal";
 
 const Navbar = () => {
   const [showPage, setShowPage] = useState(false);
-  const { habits, groups } = useContext(BuilderContext)
+  const { habits, groups } = useContext(BuilderContext);
   const authenticateUser = useContext(AuthContext);
   const navigate = useNavigate();
   const modal = useRef(null);
@@ -52,46 +52,90 @@ const Navbar = () => {
     return authenticateUser.isLoggedIn ? (
       <>
         <p>{authenticateUser.user.username}</p>
-        <button className="flex justify-between" id="profile" onClick={handleDisconnet}><LogoutIcon /></button>
+        <button
+          className="flex justify-between"
+          id="profile"
+          onClick={handleDisconnet}
+        >
+          <LogoutIcon />
+        </button>
       </>
     ) : (
-      <button className="w-full flex justify-between px-2 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950" id="login" onClick={handleShowModal}>
+      <button
+        className="w-full flex justify-between px-2 py-[0.3rem] rounded-lg border-[1px] border-transparent
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"
+        id="login"
+        onClick={handleShowModal}
+      >
         <p>Log in / Sign up</p>
         <LoginIcon />
       </button>
     );
   };
   const habitsJSX = () => {
-    if (!habits) return <li className="sub-element pl-2"><em className="italic">There is no habit.</em></li>
+    if (!habits)
+      return (
+        <li className="sub-element pl-2">
+          <em className="italic">There is no habit.</em>
+        </li>
+      );
 
-    const filteredHabits = habits.filter((habit: Habit) => habit.creator.username === authenticateUser.user.username || habit.members.some((member: User) => member.username === authenticateUser.user.username))
+    const filteredHabits = habits.filter(
+      (habit: Habit) =>
+        habit.creator.username === authenticateUser.user.username ||
+        habit.members.some(
+          (member: User) => member.username === authenticateUser.user.username,
+        ),
+    );
 
     if (filteredHabits.length === 0) {
-      return <li className="sub-element pl-2"><em className="italic">You have no habit.</em></li>
+      return (
+        <li className="sub-element pl-2">
+          <em className="italic">You have no habit.</em>
+        </li>
+      );
     }
     return filteredHabits.map((habit: Habit) => (
       <li key={habit._id} className="sub-element flex gap-2 px-1">
-        <NavLink to={`/habits/${habit._id}`} className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950">
-          <HabitIcon />{habit.title}
+        <NavLink
+          to={`/habits/${habit._id}`}
+          className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"
+        >
+          <HabitIcon />
+          {habit.title}
         </NavLink>
       </li>
-    ))
+    ));
   };
   const groupsJSX = () => {
-    if (!groups) return
+    if (!groups) return;
     if (groups.length === 0) {
-      return <li className="sub-element pl-2"><em className="italic">You have no group.</em></li>
+      return (
+        <li className="sub-element pl-2">
+          <em className="italic">You have no group.</em>
+        </li>
+      );
     }
-    const filteredGroups = groups.filter((group: Group) => group.admin.username === authenticateUser.user.username || group.members.some((member: User) => member.username === authenticateUser.user.username))
+    const filteredGroups = groups.filter(
+      (group: Group) =>
+        group.admin.username === authenticateUser.user.username ||
+        group.members.some(
+          (member: User) => member.username === authenticateUser.user.username,
+        ),
+    );
     return filteredGroups.map((group: Group) => (
       <li key={group._id} className="sub-element flex gap-2 px-1">
-        <NavLink to={`/habits/${group._id}`} className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-            hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950">
-          <GroupIcon />{group.name}
+        <NavLink
+          to={`/habits/${group._id}`}
+          className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+            hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"
+        >
+          <GroupIcon />
+          {group.name}
         </NavLink>
-      </li>))
+      </li>
+    ));
   };
 
   return (
@@ -99,30 +143,49 @@ const Navbar = () => {
       <Modal modal={modal} showPage={showPage} setShowPage={setShowPage} />
 
       <ul className="element">
-        <li className="sub-title w-full flex justify-between">{authUserJSX()}</li>
+        <li className="sub-title w-full flex justify-between">
+          {authUserJSX()}
+        </li>
       </ul>
 
       <ul className="element">
         <li className="sub-title">
-          <NavLink to="/" className="flex items-center gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"><HomeIcon />Home</NavLink>
+          <NavLink
+            to="/"
+            className="flex items-center gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"
+          >
+            <HomeIcon />
+            Home
+          </NavLink>
         </li>
       </ul>
 
       <ul className="element">
         <li className="sub-title">Discover</li>
         <li className="sub-element">
-          <NavLink to="/habits" className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"><HabitIcon />Habits</NavLink>
+          <NavLink
+            to="/habits"
+            className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"
+          >
+            <HabitIcon />
+            Habits
+          </NavLink>
         </li>
-        <li className="sub-element" >
-          <NavLink to="/groups" className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"><GroupIcon />Groups</NavLink>
+        <li className="sub-element">
+          <NavLink
+            to="/groups"
+            className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-neutral-300 hover:text-neutral-950"
+          >
+            <GroupIcon />
+            Groups
+          </NavLink>
         </li>
       </ul>
 
-      {
-        authenticateUser.isLoggedIn &&
+      {authenticateUser.isLoggedIn && (
         <>
           <ul className="element">
             <li className="sub-title">
@@ -131,8 +194,14 @@ const Navbar = () => {
             {/* LIST OF HABITS HERE */}
             {habitsJSX()}
             <li className="sub-element">
-              <button className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent text-green-600
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-green-400 " onClick={handleCreateHabit}><AddIcon />Add a habit</button>
+              <button
+                className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent text-green-600
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-green-400 "
+                onClick={handleCreateHabit}
+              >
+                <AddIcon />
+                Add a habit
+              </button>
             </li>
           </ul>
 
@@ -143,13 +212,19 @@ const Navbar = () => {
             {/* LIST OF GROUPS HERE */}
             {groupsJSX()}
             <li className="sub-element">
-              <button className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent text-green-600
-                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-green-400 " onClick={handleCreateGroup}><AddIcon />Add a group</button>
+              <button
+                className="flex gap-2 w-full px-1 py-[0.3rem] rounded-lg border-[1px] border-transparent text-green-600
+                hover:bg-neutral-50 hover:border-[1px] hover:shadow-sm hover:border-green-400 "
+                onClick={handleCreateGroup}
+              >
+                <AddIcon />
+                Add a group
+              </button>
             </li>
           </ul>
         </>
-      }
-    </nav >
+      )}
+    </nav>
   );
 };
 
