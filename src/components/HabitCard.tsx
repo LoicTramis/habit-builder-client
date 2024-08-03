@@ -1,25 +1,13 @@
 import { useContext, useState } from 'react'
-import { formatDate, monthNames, simpleFormatDate } from '../utils/date'
-import DateIcon from './icons/DateIcon'
-import DescriptionIcon from './icons/DescriptionIcon'
-import DifficultyIcon from './icons/DifficultyIcon'
-import FrequencyIcon from './icons/FrequencyIcon'
-import GroupIcon from './icons/GroupIcon'
-import { AuthContext } from '../context/AuthContextWrapper'
-import service from '../service/api'
 import { useNavigate } from 'react-router-dom'
-import { Habit } from '../types/Habit'
-import DeleteIcon from './icons/DeleteIcon'
-import EditIcon from './icons/EditIcon'
-import SaveIcon from './icons/SaveIcon'
-import CancelIcon from './icons/CancelIcon'
 import { BuilderContext } from '../context/BuilderContextWrapper'
+import { monthNames, simpleFormatDate } from '../utils/date'
+import { User } from '../types/User'
+import { Habit } from '../types/Habit'
+import service from '../service/api'
+import DateIcon from './icons/DateIcon'
 import UserIcon from './icons/UserIcon'
 import JoinIcon from './icons/JoinIcon'
-import { User } from '../types/User'
-import getCalendar from '../utils/calendar'
-import ChevronLeft from './icons/ChevronLeft'
-import ChevronRight from './icons/ChevronRight'
 import HabitForm from './HabitForm'
 import HabitContent from './HabitContent'
 
@@ -31,20 +19,24 @@ const colors = [
   ["-translate-x-12 text-lime-400 bg-lime-300", "#a3e635"],
   ["-translate-x-15 text-red-400 bg-red-300", "#34d399"],
 ]
+const today = new Date()
 
 const HabitCard = ({ _id, title, creator, difficulty, description, startDate, endDate, frequency, members, detailed = false }) => {
   const [editMode, setEditMode] = useState(false)
   const [habitForm, setHabitForm] = useState({
     description: "",
-    difficulty: "-1",
     frequency: "",
+    difficulty: "-1",
+    startDate: "",
+    endDate: ""
   })
+  console.info(habitForm)
   const { habits, setHabits } = useContext(BuilderContext)
   const navigate = useNavigate()
 
-  ////-------------------------- ////
+  ////                           ////
   // *          HANDLES          * //
-  ////-------------------------- ////
+  ////                           ////
   const handleDelete = async () => {
     const deletedHabit = await service.delete(`/api/habits/${_id}`)
     console.log(deletedHabit)
@@ -106,9 +98,9 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
     }, 300)
   }
 
-  ////-----------------------////
+  ////                       ////
   // *          JSX          * //
-  ////-----------------------////
+  ////                       ////
   const habitContentJSX = () => {
     if (detailed) {
       if (editMode) {

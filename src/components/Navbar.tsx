@@ -96,7 +96,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <Modal showPage={showPage} setShowPage={setShowPage} />
+      <Modal modal={modal} showPage={showPage} setShowPage={setShowPage} />
 
       <ul className="element">
         <li className="sub-title w-full flex justify-between">{authUserJSX()}</li>

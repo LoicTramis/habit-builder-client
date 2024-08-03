@@ -2,8 +2,7 @@ import React, { useRef } from 'react'
 import SignupPage from '../pages/SignupPage';
 import LoginPage from '../pages/LoginPage';
 
-const Modal = ({ showPage, setShowPage }) => {
-  const modal = useRef(null);
+const Modal = ({ modal, showPage, setShowPage }) => {
 
   const handleSwitchModal = () => {
     setShowPage(!showPage);

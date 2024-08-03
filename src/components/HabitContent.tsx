@@ -116,14 +116,15 @@ const HabitContent = (props) => {
         </section>
       </article>
       {/* // TODO MAKE A 3-dot menu  */}
-      {/* //// --------------------------------//// */}
-      {/* // *             BUTTONS             * // */}
-      {/* // §             - Leave             * // */}
-      {/* // !             - Delete            * // */}
-      {/* // ?             - Edit              * // */}
+      {/* ////                                   // */}
+      {/* // *            COMMENTS             * // */}
+      {/* // ?             - Info              * // */}
+      {/* // $             - Pass              * // */}
+      {/* // §             - Warning           * // */}
+      {/* // TODO          - Alert             * // */}
+      {/* // !             - Danger            * // */}
       {/* // *             - Cancel            * // */}
-      {/* // $             - Save              * // */}
-      {/* //// --------------------------------//// */}
+      {/* ////                                   // */}
       <section className='flex flex-row'>
         {authenticateUser.isLoggedIn
           && (props.members.some((member: User) => member._id === authenticateUser.user._id) || props.creator._id === authenticateUser.user._id)
