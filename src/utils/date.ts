@@ -24,7 +24,7 @@ const formatDate = (ISOStringDate: Date) => {
 
   return `${dayWeek}, ${dayMonth} ${month} ${year}`
 }
-const simpleFormatDate = (ISOStringDate: Date) => {
+const simpleFormatDate = (ISOStringDate: string) => {
   const newDate = new Date(ISOStringDate)
   const dayWeek = shortDayNames[newDate.getDay()]
   const dayMonth = newDate.getDate()
@@ -36,9 +36,13 @@ const simpleFormatDate = (ISOStringDate: Date) => {
 
   return `${dayMonth} ${month}, ${year}`
 }
+const formatISODateToHTMLDate = (ISOStringDate: string) => {
+  return ISOStringDate.slice(0,10)
+}
 
 export {
   formatDate,
   simpleFormatDate,
+  formatISODateToHTMLDate,
   monthNames,
 }
