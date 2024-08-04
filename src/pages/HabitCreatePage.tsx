@@ -1,72 +1,76 @@
-import { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../context/AuthContextWrapper'
-import service from '../service/api'
-import Main from '../components/Main'
-import { Habit } from '../types/Habit'
-import { BuilderContext } from '../context/BuilderContextWrapper'
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContextWrapper";
+import { BuilderContext } from "../context/BuilderContextWrapper";
+import { Habit } from "../types/Habit";
+import service from "../service/api";
+import Main from "../components/Main";
+import { formatISODateToHTMLDate } from "../utils/date";
+
+const today = Date.now();
+const oneWeekLater = today + 7 * 1000 * 60 * 60 * 24;
 
 const HabitCreatePage = () => {
   const [habitForm, setHabitForm] = useState({
     title: "",
     description: "",
-    startDate: "",
-    endDate: "",
+    startDate: formatISODateToHTMLDate(new Date(today).toISOString()),
+    endDate: formatISODateToHTMLDate(new Date(oneWeekLater).toISOString()),
     frequency: "",
-    difficulty: "-1",
-  })
-  const authenticateUser = useContext(AuthContext)
-  const { setHabits } = useContext(BuilderContext)
-  const navigate = useNavigate()
+    difficulty: "",
+  });
+  const authenticateUser = useContext(AuthContext);
+  const { setHabits } = useContext(BuilderContext);
+  const navigate = useNavigate();
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     /* Explaination:
-    event.target here is an HTMLElement which is the parent of all HTML elements, but isn't guaranteed to have the property value.
-    TypeScript detects this and throws the error. Cast event.target to the appropriate HTML element
-    to ensure it is HTMLInputElement which does have a value propert
+      'event.target' here is an HTMLElement which is the parent of all HTML elements, but isn't guaranteed to have the 'value' property.
+      TypeScript detects this and throws the error.
+      Cast event.target to the appropriate HTML element to ensure it is an HTMLInputElement which does have a 'value' property.
     */
-    const name = (event.target as HTMLInputElement).name
-    const value = (event.target as HTMLInputElement).value
+    const name = (event.target as HTMLInputElement).name;
+    const value = (event.target as HTMLInputElement).value;
 
-    setHabitForm(prevHabitForm => ({
+    setHabitForm((prevHabitForm) => ({
       ...prevHabitForm,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+
+    console.log(habitForm);
+    console.log(event.type);
+    console.log((event.target as HTMLInputElement).name);
+    console.log((event.target as HTMLInputElement).value);
+  };
 
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     try {
-      const response = await service.post('api/habits', habitForm)
-      console.log(response.data)
-      setHabits((prevHabits: Habit[]) => [
-        ...prevHabits,
-        response.data
-      ])
+      const response = await service.post("api/habits", habitForm);
+      const createdHabit: Habit = response.data;
+
+      setHabits((prevHabits: Habit[]) => [...prevHabits, createdHabit]);
+
       setTimeout(() => {
-        // TODO 
-        // Don't use navigate
-        // Make a pop up that show the form
-        // Then success or not show option to navigate
-        navigate('/habits/in')
-      }, 300)
+        navigate(`/habits/${createdHabit._id}`);
+      }, 300);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   if (!authenticateUser.isLoggedIn) {
-    return <p>Log in to create a habit</p>
+    return <p>Log in to create a habit</p>;
   }
 
   return (
     <Main title="Add a habit">
-      <form onSubmit={handleSubmitForm} className='flex justify-center mx-auto w-2/3'>
-        <fieldset className='w-full'>
-          <legend className='text-center text-xl font-bold'>What change do you want to make?</legend>
+      <form onSubmit={handleSubmitForm} className="mx-auto flex w-2/3 justify-center">
+        <fieldset className="w-full">
+          <legend className="text-center text-xl font-bold">What change do you want to make?</legend>
 
-          <label htmlFor='title' className='flex flex-col text-lg font-bold mt-10'>
+          <label htmlFor="title" className="mt-10 flex flex-col">
             Title
             <input
               type="text"
@@ -75,39 +79,46 @@ const HabitCreatePage = () => {
               value={habitForm.title}
               onChange={handleChange}
               required
-              className='px-5 py-3 bg-neutral-100 border border-neutral-300 rounded' />
+              className="rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold"
+            />
           </label>
 
-          <label htmlFor='description' className='flex flex-col text-lg font-bold mt-10'>Description</label>
-          <textarea
-            name="description"
-            id="description"
-            value={habitForm.description}
-            onChange={handleChange}
-            rows={5}
-            required
-            className='my-2 px-5 py-3 bg-neutral-100 border border-neutral-300 rounded w-full'></textarea>
+          <label htmlFor="description" className="mt-10 flex flex-col">
+            Description
+            <textarea
+              name="description"
+              id="description"
+              value={habitForm.description}
+              onChange={handleChange}
+              rows={5}
+              required
+              className="my-2 w-full rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold"></textarea>
+          </label>
 
-          <label htmlFor='startDate' className='flex flex-col text-lg font-bold mt-10'>
+          <label htmlFor="startDate" className="mt-10 flex flex-col">
             Start date
             <input
-              type='date'
+              type="date"
               name="startDate"
               id="startDate"
               value={habitForm.startDate}
               onChange={handleChange}
-              className='' />
+              className="text-lg font-bold"
+            />
           </label>
 
-          <label htmlFor='endDate' className='flex text-lg font-bold mt-10'>End date</label>
-          <input
-            type='date'
-            name="endDate"
-            id="endDate"
-            value={habitForm.endDate}
-            onChange={handleChange}></input>
+          <label htmlFor="endDate" className="mt-10 flex flex-col">
+            End date
+            <input
+              type="date"
+              name="endDate"
+              id="endDate"
+              value={habitForm.endDate}
+              onChange={handleChange}
+              className="text-lg font-bold"></input>
+          </label>
 
-          <label htmlFor='frequency' className='flex flex-col text-lg font-bold mt-10'>
+          <label htmlFor="frequency" className="mt-10 flex flex-col">
             Frequency
             <input
               type="text"
@@ -116,30 +127,74 @@ const HabitCreatePage = () => {
               value={habitForm.frequency}
               onChange={handleChange}
               required
-              className='px-5 py-3 bg-neutral-100 border border-neutral-300 rounded' />
+              className="rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold"
+            />
           </label>
 
-          <label htmlFor='difficulty' className='flex text-lg font-bold mt-10'>Difficulty</label>
-          <select
-            name="difficulty"
-            id="difficulty"
-            value={habitForm.difficulty}
-            onChange={handleChange}
-            required
-            className=''>
-            <option value="-1" disabled>-- Select a difficulty --</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-            <option value="Challenger">Challenger</option>
-            <option value="Goggins">Goggins</option>
-          </select>
+          <label htmlFor="difficulty" className="mt-10 flex flex-col">
+            Difficulty
+            <section className="grid grid-cols-5 items-center gap-3">
+              {/* Articles separate inputs from each other for peer-checking */}
+              <article className="flex justify-center text-center">
+                <input
+                  type="radio"
+                  name="difficulty"
+                  id="Easy"
+                  value="Easy"
+                  onChange={handleChange}
+                  className="peer hidden"
+                  defaultChecked={true}
+                />
+                <label
+                  htmlFor="Easy"
+                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  Easy
+                </label>
+              </article>
+              <article className="flex justify-center text-center">
+                <input type="radio" name="difficulty" id="Medium" value="Medium" onChange={handleChange} className="peer hidden" />
+                <label
+                  htmlFor="Medium"
+                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  Medium
+                </label>
+              </article>
+              <article className="flex justify-center text-center">
+                <input type="radio" name="difficulty" id="Hard" value="Hard" onChange={handleChange} className="peer hidden" />
+                <label
+                  htmlFor="Hard"
+                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  Hard
+                </label>
+              </article>
+              <article className="flex justify-center text-center">
+                <input type="radio" name="difficulty" id="Challenger" value="Challenger" onChange={handleChange} className="peer hidden" />
+                <label
+                  htmlFor="Challenger"
+                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  Challenger
+                </label>
+              </article>
+              <article className="flex justify-center text-center">
+                <input type="radio" name="difficulty" id="Goggins" value="Goggins" onChange={handleChange} className="peer hidden" />
+                <label
+                  htmlFor="Goggins"
+                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  Goggins
+                </label>
+              </article>
+            </section>
+          </label>
 
-          <button type="submit" className='mt-10 p-2 text-lg text-neutral-800 font-bold flex bg-green-500 bg-opacity-70 border border-green-500 rounded hover:bg-opacity-100'>Create a new habit</button>
+          <button
+            type="submit"
+            className="mt-10 flex rounded border border-green-500 bg-green-500 bg-opacity-70 p-2 text-lg font-bold text-neutral-800 hover:bg-opacity-100">
+            Create a new habit
+          </button>
         </fieldset>
       </form>
     </Main>
-  )
-}
+  );
+};
 
-export default HabitCreatePage
+export default HabitCreatePage;

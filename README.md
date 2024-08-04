@@ -11,13 +11,14 @@ _A progress everyday will go a very long way_
 Build good habit by setting up goal, forming group around that goal and putting the work to make that change
 
 <!--
-TODO - Fix: show date on edit mode
 TODO - Change: difficulty & frequency selects to pick-up card
 TODO - Add: button on start and end date tag that go to the start / end date on calendar
 TODO - Add: Close icon on login / sign up page
 -->
 
-## Create a group habit
+## Logic
+
+### Create a group habit
 
 - set up a goal (multiple habits)
 - set up a deadline (for all habits)
@@ -25,11 +26,22 @@ TODO - Add: Close icon on login / sign up page
 - change title
 - change description
 
-## Social part
+### Social part
 
 You can create a group habit (you become admin of that group)  
 You can join a group  
 You can participate in a habit
+
+## Interesting technical stuff
+
+### Typescript
+
+Casting HTMLElement into HTMLInputElement to pass TS validation for the .name and .value of HTMLElement.
+
+```ts
+    const name = (event.target as HTMLInputElement).name;
+    const value = (event.target as HTMLInputElement).value;
+```
 
 ## Style
 
