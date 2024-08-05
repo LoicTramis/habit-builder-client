@@ -10,6 +10,7 @@ import UserIcon from "./icons/UserIcon";
 import JoinIcon from "./icons/JoinIcon";
 import HabitForm from "./HabitForm";
 import HabitContent from "./HabitContent";
+import { difficultyColors } from "../utils/colors";
 
 const colors = [
   ["text-blue-400 bg-blue-300", "#60a5fa"],
@@ -19,7 +20,6 @@ const colors = [
   ["-translate-x-12 text-lime-400 bg-lime-300", "#a3e635"],
   ["-translate-x-15 text-red-400 bg-red-300", "#34d399"],
 ];
-const today = new Date();
 
 const HabitCard = ({ _id, title, creator, difficulty, description, startDate, endDate, frequency, members, detailed = false }) => {
   const [editMode, setEditMode] = useState(false);
@@ -141,11 +141,7 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
               <DateIcon />
               {simpleFormatDate(startDate)} - {simpleFormatDate(endDate)}
             </p>
-            {difficulty === "Easy" && <p className="rounded-md bg-emerald-200 px-2 py-1 text-emerald-800">{difficulty}</p>}
-            {difficulty === "Medium" && <p className="rounded-md bg-orange-200 px-2 py-1 text-orange-800">{difficulty}</p>}
-            {difficulty === "Hard" && <p className="rounded-md bg-red-200 px-2 py-1 text-red-800">{difficulty}</p>}
-            {difficulty === "Challenger" && <p className="rounded-md bg-purple-200 px-2 py-1 text-purple-800">{difficulty}</p>}
-            {difficulty === "Goggins" && <p className="rounded-md bg-neutral-200 px-2 py-1 text-neutral-800">{difficulty}</p>}
+            <p className={`${difficultyColors[difficulty]} rounded-md px-2 py-1`}>{difficulty}</p>
           </article>
 
           <article className="m-2 text-left">

@@ -6,6 +6,8 @@ const monthNames = ["January", "February", "March", "April", "May", "June", "Jul
 const shortMonthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
   "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+const today = new Date();
+
 /**
  * Format ISO date to UTC type date
  * 
@@ -41,6 +43,7 @@ const formatISODateToHTMLDate = (ISOStringDate: string) => {
 }
 
 export {
+  today,
   formatDate,
   simpleFormatDate,
   formatISODateToHTMLDate,

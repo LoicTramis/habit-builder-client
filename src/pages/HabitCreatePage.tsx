@@ -6,6 +6,7 @@ import { Habit } from "../types/Habit";
 import service from "../service/api";
 import Main from "../components/Main";
 import { formatISODateToHTMLDate } from "../utils/date";
+import { difficultyColors, difficultyPeerCheckColors } from "../utils/colors";
 
 const today = Date.now();
 const oneWeekLater = today + 7 * 1000 * 60 * 60 * 24;
@@ -147,7 +148,7 @@ const HabitCreatePage = () => {
                 />
                 <label
                   htmlFor="Easy"
-                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  className={`w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold ${difficultyPeerCheckColors["Easy"]}`}>
                   Easy
                 </label>
               </article>
@@ -155,7 +156,7 @@ const HabitCreatePage = () => {
                 <input type="radio" name="difficulty" id="Medium" value="Medium" onChange={handleChange} className="peer hidden" />
                 <label
                   htmlFor="Medium"
-                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  className={`w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold ${difficultyPeerCheckColors["Medium"]}`}>
                   Medium
                 </label>
               </article>
@@ -163,7 +164,7 @@ const HabitCreatePage = () => {
                 <input type="radio" name="difficulty" id="Hard" value="Hard" onChange={handleChange} className="peer hidden" />
                 <label
                   htmlFor="Hard"
-                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  className={`w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold ${difficultyPeerCheckColors["Hard"]}`}>
                   Hard
                 </label>
               </article>
@@ -171,7 +172,7 @@ const HabitCreatePage = () => {
                 <input type="radio" name="difficulty" id="Challenger" value="Challenger" onChange={handleChange} className="peer hidden" />
                 <label
                   htmlFor="Challenger"
-                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  className={`w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold ${difficultyPeerCheckColors["Challenger"]}`}>
                   Challenger
                 </label>
               </article>
@@ -179,7 +180,7 @@ const HabitCreatePage = () => {
                 <input type="radio" name="difficulty" id="Goggins" value="Goggins" onChange={handleChange} className="peer hidden" />
                 <label
                   htmlFor="Goggins"
-                  className="w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold peer-checked:bg-blue-500">
+                  className={`w-full cursor-pointer rounded border border-neutral-300 bg-neutral-100 px-5 py-3 text-lg font-bold ${difficultyPeerCheckColors["Goggins"]}`}>
                   Goggins
                 </label>
               </article>

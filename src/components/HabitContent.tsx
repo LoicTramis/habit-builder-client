@@ -10,6 +10,7 @@ import { formatDate } from "../utils/date";
 import ChevronLeft from "./icons/ChevronLeft";
 import ChevronRight from "./icons/ChevronRight";
 import DateIcon from "./icons/DateIcon";
+import { difficultyColors } from "../utils/colors";
 
 const HabitContent = (props) => {
   const [startDay, setStartDay] = useState(new Date(props.startDate));
@@ -35,25 +36,21 @@ const HabitContent = (props) => {
         {/* // *      Difficulty & Frenquency    * // */}
         {/* // *             Members             * // */}
         {/* ////                                 //// */}
-        <section className="flex basis-1/3 flex-col">
+        <section className="flex basis-1/3 flex-col px-4">
           <article>
-            <p className="flex items-center justify-start gap-2 px-4 pt-2 font-bold text-neutral-950">
+            <p className="flex items-center justify-start gap-2 pt-2 font-bold text-neutral-950">
               <DescriptionIcon />
               Description
             </p>
             <p className="ml-4 mt-1 h-36 w-[90%] rounded border border-transparent px-2 py-1">{props.description}</p>
           </article>
 
-          <article className="flex gap-2 px-4 py-2">
-            {props.difficulty === "Easy" && <p className="rounded-md bg-emerald-200 px-2 py-1 text-emerald-800">{props.difficulty}</p>}
-            {props.difficulty === "Medium" && <p className="rounded-md bg-orange-200 px-2 py-1 text-orange-800">{props.difficulty}</p>}
-            {props.difficulty === "Hard" && <p className="rounded-md bg-red-200 px-2 py-1 text-red-800">{props.difficulty}</p>}
-            {props.difficulty === "Challenger" && <p className="rounded-md bg-purple-200 px-2 py-1 text-purple-800">{props.difficulty}</p>}
-            {props.difficulty === "Goggins" && <p className="rounded-md bg-neutral-600 px-2 py-1 text-neutral-200">{props.difficulty}</p>}
+          <article className="grid grid-cols-4 gap-2 py-2 text-center">
+            <p className={`${difficultyColors[props.difficulty]} rounded-md px-2 py-1`}>{props.difficulty}</p>
             <p className="rounded-md bg-neutral-200 px-2 py-1 text-neutral-800">{props.frequency}</p>
           </article>
 
-          <article className="gap-2 px-4 py-2 font-bold text-neutral-950">
+          <article className="gap-2 py-2 font-bold text-neutral-950">
             <p className="flex gap-2">
               <GroupIcon />
               Members
@@ -141,10 +138,13 @@ const HabitContent = (props) => {
           </article>
         </section>
       </article>
-
-      <section className="flex flex-row">
+      {/* ////                                 //// */}
+      {/* // *           Leave / Join          * // */}
+      {/* ////                                 //// */}
+      <article className="flex flex-row">
         {authenticateUser.isLoggedIn &&
-          (props.members.some((member: User) => member._id === authenticateUser.user._id) || props.creator._id === authenticateUser.user._id) && (
+          (props.members.some((member: User) => member._id === authenticateUser.user._id) ||
+            props.creator._id === authenticateUser.user._id) && (
             <article className="flex items-center justify-between">
               <button
                 id="join"
@@ -163,14 +163,22 @@ const HabitContent = (props) => {
               </button>
             </article>
           )}
-      </section>
+      </article>
+      {/* ////                                 //// */}
+      {/* // *           Edit / Delete         * // */}
+      {/* // TODO Make settings in 3-dot menu       */}
+      {/* ////                                 //// */}
       {authenticateUser.isLoggedIn && authenticateUser.user._id === props.creator._id && (
         <article className="flex w-full justify-between">
-          <button onClick={props.handleDelete} className="m-3 flex items-start gap-1 p-2 font-bold text-red-500 opacity-70 hover:opacity-100">
+          <button
+            onClick={props.handleDelete}
+            className="m-3 flex items-start gap-1 p-2 font-bold text-red-500 opacity-70 hover:opacity-100">
             <DeleteIcon size={"size-5"} />
             Delete
           </button>
-          <button onClick={props.handleEdit} className="m-3 flex items-start gap-1 p-2 font-bold text-blue-500 opacity-70 hover:opacity-100">
+          <button
+            onClick={props.handleEdit}
+            className="m-3 flex items-start gap-1 p-2 font-bold text-blue-500 opacity-70 hover:opacity-100">
             <EditIcon size={"size-5"} />
             Edit
           </button>
