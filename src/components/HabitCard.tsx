@@ -174,7 +174,9 @@ const HabitCard = ({ _id, title, creator, difficulty, description, startDate, en
   };
 
   return (
-    <li key={_id} className="flex h-fit w-full basis-1/3 flex-col items-start justify-around gap-3 rounded-xl border-2 bg-white p-3">
+    <li
+      key={_id}
+      className="relative flex h-fit w-full basis-1/3 flex-col items-start justify-around gap-3 rounded-xl border-2 bg-neutral-50 p-3">
       <h3 className="flex flex-row items-center text-lg font-bold text-neutral-950">{title}</h3>
       {habitContentJSX()}
     </li>

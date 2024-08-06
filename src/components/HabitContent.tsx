@@ -11,11 +11,15 @@ import ChevronLeft from "./icons/ChevronLeft";
 import ChevronRight from "./icons/ChevronRight";
 import DateIcon from "./icons/DateIcon";
 import { difficultyColors } from "../utils/colors";
+import MenuIcon from "./icons/MenuIcon";
+import ShareIcon from "./icons/ShareIcon";
+import ReportIcon from "./icons/ReportIcon";
 
 const HabitContent = (props) => {
   const [startDay, setStartDay] = useState(new Date(props.startDate));
   const [endDay, setEndDay] = useState(new Date(props.endDate));
   const [calendarMonth, setCalendarMonth] = useState(startDay.getMonth());
+  const [showMenu, setShowMenu] = useState(false);
   const authenticateUser = useContext(AuthContext);
 
   const handleSideMonth = (side: string) => {
@@ -28,8 +32,15 @@ const HabitContent = (props) => {
     }
   };
 
+  const handleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
     <>
+      {/* ////                                 //// */}
+      {/* // *             CONTENT             * // */}
+      {/* ////                                 //// */}
       <article className="flex w-full justify-between">
         {/* ////                                 //// */}
         {/* // *           Description           * // */}
@@ -166,23 +177,41 @@ const HabitContent = (props) => {
       </article>
       {/* ////                                 //// */}
       {/* // *           Edit / Delete         * // */}
-      {/* // TODO Make settings in 3-dot menu       */}
       {/* ////                                 //// */}
-      {authenticateUser.isLoggedIn && authenticateUser.user._id === props.creator._id && (
-        <article className="flex w-full justify-between">
-          <button
-            onClick={props.handleDelete}
-            className="m-3 flex items-start gap-1 p-2 font-bold text-red-500 opacity-70 hover:opacity-100">
-            <DeleteIcon size={"size-5"} />
-            Delete
-          </button>
-          <button
-            onClick={props.handleEdit}
-            className="m-3 flex items-start gap-1 p-2 font-bold text-blue-500 opacity-70 hover:opacity-100">
-            <EditIcon size={"size-5"} />
-            Edit
-          </button>
-        </article>
+      <button onClick={handleMenu} className="absolute right-3 top-3 rounded p-1 hover:bg-neutral-100">
+        <MenuIcon />
+      </button>
+      {showMenu && (
+        <ul className="absolute right-5 top-12 flex w-36 flex-col gap-1 rounded-lg border border-neutral-200 bg-white py-2 shadow-lg">
+          <li>
+            <button className="flex w-full items-center gap-4 px-3 py-1 hover:bg-neutral-100">
+              <ShareIcon />
+              Share
+            </button>
+          </li>
+          <li>
+            <button className="flex w-full items-center gap-4 px-3 py-1 hover:bg-neutral-100">
+              <ReportIcon />
+              Report
+            </button>
+          </li>
+          {authenticateUser.isLoggedIn && authenticateUser.user._id === props.creator._id && (
+            <>
+              <li>
+                <button onClick={props.handleEdit} className="flex w-full items-center gap-4 px-3 py-1 text-blue-500 hover:bg-neutral-100">
+                  <EditIcon size={"size-4"} />
+                  Edit
+                </button>
+              </li>
+              <li>
+                <button onClick={props.handleDelete} className="flex w-full items-center gap-4 px-3 py-1 text-red-500 hover:bg-neutral-100">
+                  <DeleteIcon size={"size-4"} />
+                  Delete
+                </button>
+              </li>
+            </>
+          )}
+        </ul>
       )}
     </>
   );
