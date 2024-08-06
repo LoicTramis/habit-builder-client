@@ -11,7 +11,6 @@ _A progress everyday will go a very long way_
 Build good habit by setting up goal, forming group around that goal and putting the work to make that change
 
 <!--
-TODO - Change: difficulty & frequency selects to pick-up card
 TODO - Add: button on start and end date tag that go to the start / end date on calendar
 TODO - Add: Close icon on login / sign up page
 TODO - Add: Settings menu for Edit & Delete option in detail habit
